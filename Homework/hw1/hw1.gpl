@@ -1,1 +1,189 @@
-/Users/jin/hw1.gpl
+int window_width = 500;            // Window width in pixels (used at startup)
+int window_height = 500;           // Window height in pixels (used at startup)
+int animation_speed = 85;          // Global animation speed (1..100), higher is faster
+string window_title = "Catch blocks"; // Title shown in the window bar
+double window_green = 0;
+double window_red = 0;
+double window_blue = 0;
+
+forward animation user_flash(rectangle r);
+forward animation falling_object(rectangle object);
+
+
+
+int play = 1;                       // 1 = game running; 0 = game ended (win or lose)
+int block = 50; // number of remaining blocks; if 0 -> player won
+int life = 2; // if 0 -> player failed
+int net_width = 50;
+int move_amount = 20;
+int fall_speed = 10;
+int currentblock = 0;
+int fade_ticks = 20;
+int fade[block];
+
+
+int max_width = 30;
+int max_height = 30;
+
+int mouse_x;
+
+
+
+
+int i;
+int j;
+int flash_ticks = 0;
+
+
+
+
+rectangle blocks[block];
+rectangle user(x = window_height / 2, y = 5, h = 10, w = net_width, animation_block = user_flash);
+
+
+
+
+
+textbox instruction (x = 10, y = window_height / 2 - 15,
+                   text = "Catch the shapes before they fall to the ground!", red = 1, green = 1, blue = 1);
+textbox key_instruction_1 (x = 10, y = window_height / 2 - 30,
+                         text = "Use L-R arrow keys to move.", red = 1, green = 1, blue = 1);
+textbox winorlose (x = 10, y = window_height / 2 - 100,
+                 text = "", red = 1, size=0.5);
+
+initialization
+{
+    user.red = 0.5;
+    user.green = 0.5;
+    user.blue = 0.5;
+    
+    for (i = 0; i < block; i += 1)
+    {
+        blocks[i].visible = false;
+        blocks[i].w = 10 + random(max_width);
+        blocks[i].h = 10 + random(max_height);
+        blocks[i].x = blocks[i].w + random(window_width - blocks[i].w * 2);
+        blocks[i].y = 500;
+        blocks[i].red = 0.1 + (random(9) + 0.01) / 10;
+        blocks[i].green = 0.1 + (random(9) + 0.01) / 10;
+        blocks[i].blue = 0.1 + (random(9) + 0.01) / 10;
+        blocks[i].animation_block = falling_object;
+        fade[i] = fade_ticks;
+        print( blocks[i].red);
+    }
+    blocks[0].visible = true;
+
+}
+
+
+
+
+animation user_flash(rectangle r)
+{
+    if (flash_ticks > 0)
+    {
+        flash_ticks -= 1;
+        r.red = r.red * 0.9;
+        r.green = r.green * 0.9;
+        r.blue = r.blue * 0.9;
+    }
+    else
+    {
+        r.red = 0.5;
+        r.green = 0.5;
+        r.blue = 0.5;
+    }
+}
+
+animation falling_object(rectangle object)
+{
+    if (object.visible == true && play == 1)
+    {
+        if (object touches user)
+        {
+            object.red = 1;
+            object.green = 1;
+            object.red = 1;
+            print(object.red);
+            print(object.green);
+            print(object.red);
+            if (fade[currentblock] > 0)
+            {
+                object.red = object.red * 0.9;
+                object.green = object.green * 0.9;
+                object.blue = object.blue * 0.9;
+                fade[currentblock]--;
+            }
+            if (fade[currentblock] == 0){
+                object.visible = false;
+                currentblock += 1;
+                blocks[currentblock].visible = true;
+            }
+
+        }
+        else
+        {
+            if (object.y < 0)
+            {
+                if (life == 0)
+                {
+                    play = 0;
+                    winorlose.text = "YOU LOSE!";
+                }
+                life--;
+                object.visible = false;
+                currentblock += 1;
+                blocks[currentblock].visible = true;
+            }
+            else
+            {
+                object.y -= fall_speed;
+            }
+        }
+    }
+}
+
+
+
+on leftarrow
+{
+    if (play == 1)
+    {
+        if (user.x + 1 < move_amount)
+        {
+            user.red = 1;
+            user.green = 1;
+            user.blue = 1;
+            flash_ticks = 7; // flash indicate error
+        }
+        else
+        {
+            user.x -= move_amount;
+        }
+    }
+}
+
+on rightarrow
+{
+    if (play == 1)
+    {
+        if (user.x - 1 > window_width - move_amount - user.w)
+        {
+            user.red = 1;
+            user.green = 1;
+            user.blue = 1;
+            flash_ticks = 7; // flash indicate error
+        }
+        else
+        {
+            user.x += move_amount;
+        }
+    }
+}
+
+
+
+on mouse_drag
+{
+    user.x = mouse_x;
+}
