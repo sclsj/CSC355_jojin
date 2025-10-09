@@ -1,1 +1,2 @@
-Parse error on line 8 reported by parser: syntax error, unexpected string, expecting $end.
+Syntax error on line 8 '"' is not a legal token.
+Parse error on line 8 reported by parser: syntax error, unexpected error.

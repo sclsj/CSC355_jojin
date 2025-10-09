@@ -1496,12 +1496,12 @@ return emit(T_NEAR);
 case 73:
 YY_RULE_SETUP
 #line 164 "gpl.l"
-return emit(T_STAR);
+return emit(T_MULTIPLY);
 	YY_BREAK
 case 74:
 YY_RULE_SETUP
 #line 165 "gpl.l"
-return emit(T_SLASH);
+return emit(T_DIVIDE);
 	YY_BREAK
 case 75:
 YY_RULE_SETUP
@@ -1516,37 +1516,37 @@ return emit(T_MINUS);
 case 77:
 YY_RULE_SETUP
 #line 168 "gpl.l"
-return emit(T_PERCENT);
+return emit(T_MOD);
 	YY_BREAK
 case 78:
 YY_RULE_SETUP
 #line 170 "gpl.l"
-return emit(T_LT);
+return emit(T_LESS);
 	YY_BREAK
 case 79:
 YY_RULE_SETUP
 #line 171 "gpl.l"
-return emit(T_GT);
+return emit(T_GREATER);
 	YY_BREAK
 case 80:
 YY_RULE_SETUP
 #line 172 "gpl.l"
-return emit(T_LE);
+return emit(T_LESS_EQUAL);
 	YY_BREAK
 case 81:
 YY_RULE_SETUP
 #line 173 "gpl.l"
-return emit(T_GE);
+return emit(T_GREATER_EQUAL);
 	YY_BREAK
 case 82:
 YY_RULE_SETUP
 #line 174 "gpl.l"
-return emit(T_EQ);
+return emit(T_EQUAL);
 	YY_BREAK
 case 83:
 YY_RULE_SETUP
 #line 175 "gpl.l"
-return emit(T_NEQ);
+return emit(T_NOT_EQUAL);
 	YY_BREAK
 case 84:
 YY_RULE_SETUP
@@ -1556,12 +1556,12 @@ return emit(T_NOT);
 case 85:
 YY_RULE_SETUP
 #line 177 "gpl.l"
-return emit(T_ANDAND);
+return emit(T_AND);
 	YY_BREAK
 case 86:
 YY_RULE_SETUP
 #line 178 "gpl.l"
-return emit(T_OROR);
+return emit(T_OR);
 	YY_BREAK
 case 87:
 YY_RULE_SETUP

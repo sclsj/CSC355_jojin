@@ -27,7 +27,7 @@ int undeclared = 0;
 }
 
 
-%token <union_string> T_ERROR             "error"
+// %token <union_string> T_ERROR             "error"
 
 %error-verbose
 
@@ -108,21 +108,21 @@ int undeclared = 0;
 %token T_TOUCHES             "touches"
 %token T_NEAR                "near"
 
-%token T_STAR                "*"
-%token T_SLASH               "/"
+%token T_MULTIPLY                "*"
+%token T_DIVIDE               "/"
 %token T_PLUS                "+"
 %token T_MINUS               "-"
-%token T_PERCENT             "%"
+%token T_MOD             "%"
 
-%token T_LT                  "<"
-%token T_GT                  ">"
-%token T_LE                  "<="
-%token T_GE                  ">="
-%token T_EQ                  "=="
-%token T_NEQ                 "!="
+%token T_LESS                  "<"
+%token T_GREATER                  ">"
+%token T_LESS_EQUAL                  "<="
+%token T_GREATER_EQUAL                  ">="
+%token T_EQUAL                  "=="
+%token T_NOT_EQUAL                 "!="
 %token T_NOT                 "!"
-%token T_ANDAND              "&&"
-%token T_OROR                "||"
+%token T_AND              "&&"
+%token T_OR                "||"
 
 %token T_INT_CONSTANT        "int constant"
 %token T_DOUBLE_CONSTANT     "double constant"
@@ -167,6 +167,7 @@ declaration_list:
 declaration:
     variable_declaration T_SEMIC
     | object_declaration T_SEMIC
+    | forward_declaration T_SEMIC
     ;
 
 //---------------------------------------------------------------------
@@ -179,6 +180,7 @@ variable_declaration:
 simple_type:
     T_INT
     | T_DOUBLE
+    | T_STRING
     ;
 
 //---------------------------------------------------------------------
@@ -221,6 +223,7 @@ parameter:
 
 //---------------------------------------------------------------------
 forward_declaration:
+	T_FORWARD T_ANIMATION T_ID T_LPAREN check_animation_parameter T_RPAREN
     ;
 
 //---------------------------------------------------------------------
@@ -271,6 +274,20 @@ on_block:
 keystroke:
 	T_LEFTARROW
 	| T_RIGHTARROW
+	| T_UPARROW
+	| T_DOWNARROW
+	| T_SPACE
+	| T_F1
+	| T_AKEY
+	| T_SKEY
+	| T_DKEY
+	| T_FKEY
+	| T_HKEY
+	| T_JKEY
+	| T_KKEY
+	| T_LKEY
+	| T_WKEY
+	| T_ZKEY
     ;
 
 //---------------------------------------------------------------------
@@ -303,6 +320,11 @@ statement_list:
 //---------------------------------------------------------------------
 statement:
     | assign_statement T_SEMIC
+    | if_statement
+    | for_statement
+    | print_statement T_SEMIC
+    | exit_statement T_SEMIC
+    | statement_block
     ;
 
 //---------------------------------------------------------------------
@@ -385,6 +407,16 @@ primary_expression:
 
 //---------------------------------------------------------------------
 math_operator:
+    T_SIN
+    | T_COS
+    | T_TAN
+    | T_ASIN
+    | T_ACOS
+    | T_ATAN
+    | T_SQRT
+    | T_ABS
+    | T_FLOOR
+    | T_RANDOM
     ;
 
 //---------------------------------------------------------------------

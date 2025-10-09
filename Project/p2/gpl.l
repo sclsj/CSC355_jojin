@@ -161,21 +161,21 @@ void get_string_value()
 "touches"            return emit(T_TOUCHES);
 "near"               return emit(T_NEAR);
 
-"*"                  return emit(T_STAR);
-"/"                  return emit(T_SLASH);
+"*"                  return emit(T_MULTIPLY);
+"/"                  return emit(T_DIVIDE);
 "+"                  return emit(T_PLUS);
 "-"                  return emit(T_MINUS);
-"%"                  return emit(T_PERCENT);
+"%"                  return emit(T_MOD);
 
-"<"                  return emit(T_LT);
-">"                  return emit(T_GT);
-"<="                 return emit(T_LE);
-">="                 return emit(T_GE);
-"=="                 return emit(T_EQ);
-"!="                 return emit(T_NEQ);
+"<"                  return emit(T_LESS);
+">"                  return emit(T_GREATER);
+"<="                 return emit(T_LESS_EQUAL);
+">="                 return emit(T_GREATER_EQUAL);
+"=="                 return emit(T_EQUAL);
+"!="                 return emit(T_NOT_EQUAL);
 "!"                  return emit(T_NOT);
-"&&"                 return emit(T_ANDAND);
-"||"                 return emit(T_OROR);
+"&&"                 return emit(T_AND);
+"||"                 return emit(T_OR);
 
 [0-9]+          			get_int_value(); return T_INT_CONSTANT;
 [0-9]+\.[0-9]*|\.[0-9]+		get_double_value(); return T_DOUBLE_CONSTANT;
