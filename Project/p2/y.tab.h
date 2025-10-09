@@ -140,7 +140,7 @@
      T_MOD = 356,
      T_DIVIDE = 357,
      T_MULTIPLY = 358,
-     UNARY_OP = 359
+     UNARY_OPS = 359
    };
 #endif
 /* Tokens.  */
@@ -245,7 +245,7 @@
 #define T_MOD 356
 #define T_DIVIDE 357
 #define T_MULTIPLY 358
-#define UNARY_OP 359
+#define UNARY_OPS 359
 
 
 

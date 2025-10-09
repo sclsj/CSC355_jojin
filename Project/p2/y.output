@@ -61,50 +61,46 @@ Terminals which are not used
    ">="
    "=="
    "!="
-   "!"
    "&&"
    "||"
-   UNARY_OP
 
 
 Useless rules
 
-   79 forward_declaration: /* empty */
+   81 forward_declaration: /* empty */
 
-   80 animation_parameter: object_type "identifier"
+   82 animation_parameter: object_type "identifier"
 
-   81 if_block: statement_block_creator statement end_of_statement_block
-   82         | statement_block
+   83 if_block: statement_block_creator statement end_of_statement_block
+   84         | statement_block
 
-   83 if_statement: "if" "(" expression ")" if_block
-   84             | "if" "(" expression ")" if_block "else" if_block
+   85 if_statement: "if" "(" expression ")" if_block
+   86             | "if" "(" expression ")" if_block "else" if_block
 
-   85 for_statement: "for" "(" statement_block_creator assign_statement_or_empty end_of_statement_block ";" expression ";" statement_block_creator assign_statement_or_empty end_of_statement_block ")" statement_block
+   87 for_statement: "for" "(" statement_block_creator assign_statement_or_empty end_of_statement_block ";" expression ";" statement_block_creator assign_statement_or_empty end_of_statement_block ")" statement_block
 
-   86 print_statement: "print" "(" expression ")"
+   88 print_statement: "print" "(" expression ")"
 
-   87 exit_statement: "exit" "(" expression ")"
+   89 exit_statement: "exit" "(" expression ")"
 
-   88 assign_statement_or_empty: assign_statement
-   89                          | empty
+   90 assign_statement_or_empty: assign_statement
+   91                          | empty
 
 
 Rules never reduced
 
    42 statement: /* empty */
 
-   77 math_operator: /* empty */
+   79 math_operator: /* empty */
 
 
 State 32 conflicts: 1 shift/reduce
 State 33 conflicts: 1 shift/reduce
 State 37 conflicts: 1 shift/reduce
 State 47 conflicts: 1 shift/reduce
-State 67 conflicts: 1 shift/reduce
-State 70 conflicts: 1 shift/reduce
+State 48 conflicts: 1 shift/reduce
+State 49 conflicts: 1 shift/reduce
 State 71 conflicts: 1 shift/reduce
-State 72 conflicts: 1 shift/reduce
-State 73 conflicts: 1 shift/reduce
 State 74 conflicts: 1 shift/reduce
 State 75 conflicts: 1 shift/reduce
 State 76 conflicts: 1 shift/reduce
@@ -118,11 +114,15 @@ State 83 conflicts: 1 shift/reduce
 State 84 conflicts: 1 shift/reduce
 State 85 conflicts: 1 shift/reduce
 State 86 conflicts: 1 shift/reduce
-State 90 conflicts: 2 shift/reduce
-State 125 conflicts: 1 shift/reduce
-State 126 conflicts: 1 shift/reduce
-State 127 conflicts: 1 shift/reduce
-State 135 conflicts: 2 shift/reduce
+State 87 conflicts: 1 shift/reduce
+State 88 conflicts: 1 shift/reduce
+State 89 conflicts: 1 shift/reduce
+State 90 conflicts: 1 shift/reduce
+State 94 conflicts: 2 shift/reduce
+State 129 conflicts: 1 shift/reduce
+State 130 conflicts: 1 shift/reduce
+State 131 conflicts: 1 shift/reduce
+State 139 conflicts: 2 shift/reduce
 
 
 Grammar
@@ -221,21 +221,23 @@ Grammar
    64           | expression T_MULTIPLY expression
    65           | expression T_DIVIDE expression
    66           | expression T_MOD expression
-   67           | math_operator "(" expression ")"
-   68           | expression "near" expression
-   69           | expression "touches" expression
+   67           | "-" expression
+   68           | "!" expression
+   69           | math_operator "(" expression ")"
+   70           | expression "near" expression
+   71           | expression "touches" expression
 
-   70 primary_expression: "(" expression ")"
-   71                   | variable
-   72                   | "int constant"
-   73                   | "true"
-   74                   | "false"
-   75                   | "double constant"
-   76                   | "string constant"
+   72 primary_expression: "(" expression ")"
+   73                   | variable
+   74                   | "int constant"
+   75                   | "true"
+   76                   | "false"
+   77                   | "double constant"
+   78                   | "string constant"
 
-   77 math_operator: /* empty */
+   79 math_operator: /* empty */
 
-   78 empty: /* empty */
+   80 empty: /* empty */
 
 
 Terminals, with rules where they appear
@@ -261,8 +263,8 @@ error (256)
 "else" (274)
 "exit" (275)
 "print" (276)
-"true" (277) 73
-"false" (278) 74
+"true" (277) 75
+"false" (278) 76
 "space" (279)
 "leftarrow" (280) 35
 "rightarrow" (281) 36
@@ -287,8 +289,8 @@ error (256)
 "lkey" (300)
 "wkey" (301)
 "zkey" (302)
-"(" (303) 12 32 67 70
-")" (304) 12 32 67 70
+"(" (303) 12 32 69 72
+")" (304) 12 32 69 72
 "{" (305) 32 37
 "}" (306) 32 37
 "[" (307) 7 13 50 52
@@ -311,12 +313,12 @@ error (256)
 "abs" (324)
 "floor" (325)
 "random" (326)
-"touches" (327) 69
-"near" (328) 68
+"touches" (327) 71
+"near" (328) 70
 "*" (329)
 "/" (330)
 "+" (331) 62
-"-" (332) 63
+"-" (332) 63 67
 "%" (333)
 "<" (334)
 ">" (335)
@@ -324,12 +326,12 @@ error (256)
 ">=" (337)
 "==" (338)
 "!=" (339)
-"!" (340)
+"!" (340) 68
 "&&" (341)
 "||" (342)
-"int constant" (343) 72
-"double constant" (344) 75
-"string constant" (345) 76
+"int constant" (343) 74
+"double constant" (344) 77
+"string constant" (345) 78
 "identifier" (346) 6 7 12 13 23 32 33 49 50 51 52
 IF_NO_ELSE (347)
 T_OR (348) 54
@@ -343,7 +345,7 @@ T_LESS (355) 58
 T_MOD (356) 66
 T_DIVIDE (357) 65
 T_MULTIPLY (358) 64
-UNARY_OP (359)
+UNARY_OPS (359)
 
 
 Nonterminals, with rules where they appear
@@ -401,24 +403,24 @@ statement (129)
 assign_statement (130)
     on left: 44 45 46 47 48, on right: 43
 variable (131)
-    on left: 49 50 51 52, on right: 44 45 46 47 48 71
+    on left: 49 50 51 52, on right: 44 45 46 47 48 73
 expression (132)
-    on left: 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69,
-    on right: 7 10 13 23 44 45 46 50 52 54 55 56 57 58 59 60 61 62
-    63 64 65 66 67 68 69 70
+    on left: 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70
+    71, on right: 7 10 13 23 44 45 46 50 52 54 55 56 57 58 59 60 61
+    62 63 64 65 66 67 68 69 70 71 72
 primary_expression (133)
-    on left: 70 71 72 73 74 75 76, on right: 53
+    on left: 72 73 74 75 76 77 78, on right: 53
 math_operator (134)
-    on left: 77, on right: 67
+    on left: 79, on right: 69
 empty (135)
-    on left: 78, on right: 3 11 20 25 41
+    on left: 80, on right: 3 11 20 25 41
 
 
 state 0
 
     0 $accept: . program $end
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
     program           go to state 1
     declaration_list  go to state 2
@@ -445,7 +447,7 @@ state 2
     "rectangle"  shift, and go to state 10
     "textbox"    shift, and go to state 11
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
     declaration           go to state 12
     variable_declaration  go to state 13
@@ -597,7 +599,7 @@ state 20
     "["  shift, and go to state 32
     "="  shift, and go to state 33
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
     optional_initializer  go to state 34
     empty                 go to state 35
@@ -696,17 +698,19 @@ state 32
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 53
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 55
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
 state 33
@@ -716,17 +720,19 @@ state 33
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 56
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 58
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
 state 34
@@ -747,14 +753,14 @@ state 36
 
    12 object_declaration: object_type "identifier" "(" . parameter_list_or_empty ")"
 
-    "identifier"  shift, and go to state 57
+    "identifier"  shift, and go to state 59
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
-    parameter_list_or_empty  go to state 58
-    parameter_list           go to state 59
-    parameter                go to state 60
-    empty                    go to state 61
+    parameter_list_or_empty  go to state 60
+    parameter_list           go to state 61
+    parameter                go to state 62
+    empty                    go to state 63
 
 
 state 37
@@ -764,17 +770,19 @@ state 37
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 62
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 64
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
 state 38
@@ -783,7 +791,7 @@ state 38
 
     $default  reduce using rule 38 (statement_block_creator)
 
-    statement_block_creator  go to state 63
+    statement_block_creator  go to state 65
 
 
 state 39
@@ -820,92 +828,138 @@ state 43
 
     "{"  shift, and go to state 38
 
-    statement_block  go to state 64
+    statement_block  go to state 66
 
 
 state 44
 
    32 animation_block: "animation" "identifier" . "(" check_animation_parameter ")" "{" statement_list "}" end_of_statement_block
 
-    "("  shift, and go to state 65
+    "("  shift, and go to state 67
 
 
 state 45
 
-   73 primary_expression: "true" .
-
-    $default  reduce using rule 73 (primary_expression)
-
-
-state 46
-
-   74 primary_expression: "false" .
-
-    $default  reduce using rule 74 (primary_expression)
-
-
-state 47
-
-   70 primary_expression: "(" . expression ")"
-
-    "true"             shift, and go to state 45
-    "false"            shift, and go to state 46
-    "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
-
-    "("  [reduce using rule 77 (math_operator)]
-
-    variable            go to state 52
-    expression          go to state 66
-    primary_expression  go to state 54
-    math_operator       go to state 55
-
-
-state 48
-
-   72 primary_expression: "int constant" .
-
-    $default  reduce using rule 72 (primary_expression)
-
-
-state 49
-
-   75 primary_expression: "double constant" .
+   75 primary_expression: "true" .
 
     $default  reduce using rule 75 (primary_expression)
 
 
-state 50
+state 46
 
-   76 primary_expression: "string constant" .
+   76 primary_expression: "false" .
 
     $default  reduce using rule 76 (primary_expression)
 
 
+state 47
+
+   72 primary_expression: "(" . expression ")"
+
+    "true"             shift, and go to state 45
+    "false"            shift, and go to state 46
+    "("                shift, and go to state 47
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
+
+    "("  [reduce using rule 79 (math_operator)]
+
+    variable            go to state 54
+    expression          go to state 68
+    primary_expression  go to state 56
+    math_operator       go to state 57
+
+
+state 48
+
+   67 expression: "-" . expression
+
+    "true"             shift, and go to state 45
+    "false"            shift, and go to state 46
+    "("                shift, and go to state 47
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
+
+    "("  [reduce using rule 79 (math_operator)]
+
+    variable            go to state 54
+    expression          go to state 69
+    primary_expression  go to state 56
+    math_operator       go to state 57
+
+
+state 49
+
+   68 expression: "!" . expression
+
+    "true"             shift, and go to state 45
+    "false"            shift, and go to state 46
+    "("                shift, and go to state 47
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
+
+    "("  [reduce using rule 79 (math_operator)]
+
+    variable            go to state 54
+    expression          go to state 70
+    primary_expression  go to state 56
+    math_operator       go to state 57
+
+
+state 50
+
+   74 primary_expression: "int constant" .
+
+    $default  reduce using rule 74 (primary_expression)
+
+
 state 51
+
+   77 primary_expression: "double constant" .
+
+    $default  reduce using rule 77 (primary_expression)
+
+
+state 52
+
+   78 primary_expression: "string constant" .
+
+    $default  reduce using rule 78 (primary_expression)
+
+
+state 53
 
    49 variable: "identifier" .
    50         | "identifier" . "[" expression "]"
    51         | "identifier" . "." "identifier"
    52         | "identifier" . "[" expression "]" "." "identifier"
 
-    "["  shift, and go to state 67
-    "."  shift, and go to state 68
+    "["  shift, and go to state 71
+    "."  shift, and go to state 72
 
     $default  reduce using rule 49 (variable)
 
 
-state 52
+state 54
 
-   71 primary_expression: variable .
+   73 primary_expression: variable .
 
-    $default  reduce using rule 71 (primary_expression)
+    $default  reduce using rule 73 (primary_expression)
 
 
-state 53
+state 55
 
     7 variable_declaration: simple_type "identifier" "[" expression . "]"
    54 expression: expression . T_OR expression
@@ -921,42 +975,42 @@ state 53
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "]"              shift, and go to state 69
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "]"              shift, and go to state 73
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
 
-state 54
+state 56
 
    53 expression: primary_expression .
 
     $default  reduce using rule 53 (expression)
 
 
-state 55
+state 57
 
-   67 expression: math_operator . "(" expression ")"
+   69 expression: math_operator . "(" expression ")"
 
-    "("  shift, and go to state 85
+    "("  shift, and go to state 89
 
 
-state 56
+state 58
 
    10 optional_initializer: "=" expression .
    54 expression: expression . T_OR expression
@@ -972,67 +1026,67 @@ state 56
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 10 (optional_initializer)
 
 
-state 57
+state 59
 
    23 parameter: "identifier" . "=" expression
 
-    "="  shift, and go to state 86
+    "="  shift, and go to state 90
 
 
-state 58
+state 60
 
    12 object_declaration: object_type "identifier" "(" parameter_list_or_empty . ")"
 
-    ")"  shift, and go to state 87
+    ")"  shift, and go to state 91
 
 
-state 59
+state 61
 
    19 parameter_list_or_empty: parameter_list .
    21 parameter_list: parameter_list . "," parameter
 
-    ","  shift, and go to state 88
+    ","  shift, and go to state 92
 
     $default  reduce using rule 19 (parameter_list_or_empty)
 
 
-state 60
+state 62
 
    22 parameter_list: parameter .
 
     $default  reduce using rule 22 (parameter_list)
 
 
-state 61
+state 63
 
    20 parameter_list_or_empty: empty .
 
     $default  reduce using rule 20 (parameter_list_or_empty)
 
 
-state 62
+state 64
 
    13 object_declaration: object_type "identifier" "[" expression . "]"
    54 expression: expression . T_OR expression
@@ -1048,45 +1102,45 @@ state 62
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "]"              shift, and go to state 89
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "]"              shift, and go to state 93
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
 
-state 63
+state 65
 
    37 statement_block: "{" statement_block_creator . statement_list "}" end_of_statement_block
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
-    statement_list  go to state 90
-    empty           go to state 91
+    statement_list  go to state 94
+    empty           go to state 95
 
 
-state 64
+state 66
 
    34 on_block: "on" keystroke statement_block .
 
     $default  reduce using rule 34 (on_block)
 
 
-state 65
+state 67
 
    32 animation_block: "animation" "identifier" "(" . check_animation_parameter ")" "{" statement_list "}" end_of_statement_block
 
@@ -1096,11 +1150,11 @@ state 65
     "rectangle"  shift, and go to state 10
     "textbox"    shift, and go to state 11
 
-    object_type                go to state 92
-    check_animation_parameter  go to state 93
+    object_type                go to state 96
+    check_animation_parameter  go to state 97
 
 
-state 66
+state 68
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1115,29 +1169,73 @@ state 66
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
-   70 primary_expression: "(" expression . ")"
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
+   72 primary_expression: "(" expression . ")"
 
-    ")"              shift, and go to state 94
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    ")"              shift, and go to state 98
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
 
-state 67
+state 69
+
+   54 expression: expression . T_OR expression
+   55           | expression . T_AND expression
+   56           | expression . T_LESS_EQUAL expression
+   57           | expression . T_GREATER_EQUAL expression
+   58           | expression . T_LESS expression
+   59           | expression . T_GREATER expression
+   60           | expression . T_EQUAL expression
+   61           | expression . T_NOT_EQUAL expression
+   62           | expression . "+" expression
+   63           | expression . "-" expression
+   64           | expression . T_MULTIPLY expression
+   65           | expression . T_DIVIDE expression
+   66           | expression . T_MOD expression
+   67           | "-" expression .
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
+
+    $default  reduce using rule 67 (expression)
+
+
+state 70
+
+   54 expression: expression . T_OR expression
+   55           | expression . T_AND expression
+   56           | expression . T_LESS_EQUAL expression
+   57           | expression . T_GREATER_EQUAL expression
+   58           | expression . T_LESS expression
+   59           | expression . T_GREATER expression
+   60           | expression . T_EQUAL expression
+   61           | expression . T_NOT_EQUAL expression
+   62           | expression . "+" expression
+   63           | expression . "-" expression
+   64           | expression . T_MULTIPLY expression
+   65           | expression . T_DIVIDE expression
+   66           | expression . T_MOD expression
+   68           | "!" expression .
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
+
+    $default  reduce using rule 68 (expression)
+
+
+state 71
 
    50 variable: "identifier" "[" . expression "]"
    52         | "identifier" "[" . expression "]" "." "identifier"
@@ -1145,441 +1243,477 @@ state 67
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 95
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 99
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 68
+state 72
 
    51 variable: "identifier" "." . "identifier"
 
-    "identifier"  shift, and go to state 96
+    "identifier"  shift, and go to state 100
 
 
-state 69
+state 73
 
     7 variable_declaration: simple_type "identifier" "[" expression "]" .
 
     $default  reduce using rule 7 (variable_declaration)
 
 
-state 70
+state 74
 
-   69 expression: expression "touches" . expression
-
-    "true"             shift, and go to state 45
-    "false"            shift, and go to state 46
-    "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
-
-    "("  [reduce using rule 77 (math_operator)]
-
-    variable            go to state 52
-    expression          go to state 97
-    primary_expression  go to state 54
-    math_operator       go to state 55
-
-
-state 71
-
-   68 expression: expression "near" . expression
+   71 expression: expression "touches" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 98
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 101
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 72
+state 75
+
+   70 expression: expression "near" . expression
+
+    "true"             shift, and go to state 45
+    "false"            shift, and go to state 46
+    "("                shift, and go to state 47
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
+
+    "("  [reduce using rule 79 (math_operator)]
+
+    variable            go to state 54
+    expression          go to state 102
+    primary_expression  go to state 56
+    math_operator       go to state 57
+
+
+state 76
 
    62 expression: expression "+" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 99
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 103
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 73
+state 77
 
    63 expression: expression "-" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 100
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 104
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 74
+state 78
 
    54 expression: expression T_OR . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 101
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 105
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 75
+state 79
 
    55 expression: expression T_AND . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 102
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 106
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 76
+state 80
 
    61 expression: expression T_NOT_EQUAL . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 103
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 107
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 77
+state 81
 
    60 expression: expression T_EQUAL . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 104
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 108
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 78
+state 82
 
    57 expression: expression T_GREATER_EQUAL . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 105
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 109
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 79
+state 83
 
    56 expression: expression T_LESS_EQUAL . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 106
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 110
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 80
+state 84
 
    59 expression: expression T_GREATER . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 107
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 111
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 81
+state 85
 
    58 expression: expression T_LESS . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 108
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 112
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 82
+state 86
 
    66 expression: expression T_MOD . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 109
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 113
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 83
+state 87
 
    65 expression: expression T_DIVIDE . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 110
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 114
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 84
+state 88
 
    64 expression: expression T_MULTIPLY . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 111
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 115
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 85
+state 89
 
-   67 expression: math_operator "(" . expression ")"
+   69 expression: math_operator "(" . expression ")"
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 112
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 116
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 86
+state 90
 
    23 parameter: "identifier" "=" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 113
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 117
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 87
+state 91
 
    12 object_declaration: object_type "identifier" "(" parameter_list_or_empty ")" .
 
     $default  reduce using rule 12 (object_declaration)
 
 
-state 88
+state 92
 
    21 parameter_list: parameter_list "," . parameter
 
-    "identifier"  shift, and go to state 57
+    "identifier"  shift, and go to state 59
 
-    parameter  go to state 114
+    parameter  go to state 118
 
 
-state 89
+state 93
 
    13 object_declaration: object_type "identifier" "[" expression "]" .
 
     $default  reduce using rule 13 (object_declaration)
 
 
-state 90
+state 94
 
    37 statement_block: "{" statement_block_creator statement_list . "}" end_of_statement_block
    40 statement_list: statement_list . statement
 
-    "}"           shift, and go to state 115
-    "identifier"  shift, and go to state 51
+    "}"           shift, and go to state 119
+    "identifier"  shift, and go to state 53
 
     "}"           [reduce using rule 42 (statement)]
     "identifier"  [reduce using rule 42 (statement)]
 
-    statement         go to state 116
-    assign_statement  go to state 117
-    variable          go to state 118
+    statement         go to state 120
+    assign_statement  go to state 121
+    variable          go to state 122
 
 
-state 91
+state 95
 
    41 statement_list: empty .
 
     $default  reduce using rule 41 (statement_list)
 
 
-state 92
+state 96
 
    33 check_animation_parameter: object_type . "identifier"
 
-    "identifier"  shift, and go to state 119
+    "identifier"  shift, and go to state 123
 
 
-state 93
+state 97
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter . ")" "{" statement_list "}" end_of_statement_block
 
-    ")"  shift, and go to state 120
+    ")"  shift, and go to state 124
 
 
-state 94
+state 98
 
-   70 primary_expression: "(" expression ")" .
+   72 primary_expression: "(" expression ")" .
 
-    $default  reduce using rule 70 (primary_expression)
+    $default  reduce using rule 72 (primary_expression)
 
 
-state 95
+state 99
 
    50 variable: "identifier" "[" expression . "]"
    52         | "identifier" "[" expression . "]" "." "identifier"
@@ -1596,35 +1730,35 @@ state 95
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "]"              shift, and go to state 121
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "]"              shift, and go to state 125
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
 
-state 96
+state 100
 
    51 variable: "identifier" "." "identifier" .
 
     $default  reduce using rule 51 (variable)
 
 
-state 97
+state 101
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1639,28 +1773,28 @@ state 97
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
-   69           | expression "touches" expression .
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
+   71           | expression "touches" expression .
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
-    $default  reduce using rule 69 (expression)
+    $default  reduce using rule 71 (expression)
 
 
-state 98
+state 102
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1675,28 +1809,28 @@ state 98
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   68           | expression "near" expression .
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   70           | expression "near" expression .
+   71           | expression . "touches" expression
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
-    $default  reduce using rule 68 (expression)
+    $default  reduce using rule 70 (expression)
 
 
-state 99
+state 103
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1712,17 +1846,17 @@ state 99
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 62 (expression)
 
 
-state 100
+state 104
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1738,17 +1872,17 @@ state 100
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 63 (expression)
 
 
-state 101
+state 105
 
    54 expression: expression . T_OR expression
    54           | expression T_OR expression .
@@ -1764,26 +1898,26 @@ state 101
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 54 (expression)
 
 
-state 102
+state 106
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1799,25 +1933,25 @@ state 102
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 55 (expression)
 
 
-state 103
+state 107
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1833,23 +1967,23 @@ state 103
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 61 (expression)
 
 
-state 104
+state 108
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1865,23 +1999,23 @@ state 104
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 60 (expression)
 
 
-state 105
+state 109
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1897,19 +2031,19 @@ state 105
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"         shift, and go to state 72
-    "-"         shift, and go to state 73
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    "+"         shift, and go to state 76
+    "-"         shift, and go to state 77
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 57 (expression)
 
 
-state 106
+state 110
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1925,19 +2059,19 @@ state 106
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"         shift, and go to state 72
-    "-"         shift, and go to state 73
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    "+"         shift, and go to state 76
+    "-"         shift, and go to state 77
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 56 (expression)
 
 
-state 107
+state 111
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1953,19 +2087,19 @@ state 107
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"         shift, and go to state 72
-    "-"         shift, and go to state 73
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    "+"         shift, and go to state 76
+    "-"         shift, and go to state 77
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 59 (expression)
 
 
-state 108
+state 112
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -1981,19 +2115,19 @@ state 108
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "+"         shift, and go to state 72
-    "-"         shift, and go to state 73
-    T_MOD       shift, and go to state 82
-    T_DIVIDE    shift, and go to state 83
-    T_MULTIPLY  shift, and go to state 84
+    "+"         shift, and go to state 76
+    "-"         shift, and go to state 77
+    T_MOD       shift, and go to state 86
+    T_DIVIDE    shift, and go to state 87
+    T_MULTIPLY  shift, and go to state 88
 
     $default  reduce using rule 58 (expression)
 
 
-state 109
+state 113
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -2009,13 +2143,13 @@ state 109
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
    66           | expression T_MOD expression .
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
     $default  reduce using rule 66 (expression)
 
 
-state 110
+state 114
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -2031,13 +2165,13 @@ state 110
    65           | expression . T_DIVIDE expression
    65           | expression T_DIVIDE expression .
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
     $default  reduce using rule 65 (expression)
 
 
-state 111
+state 115
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -2053,13 +2187,13 @@ state 111
    64           | expression T_MULTIPLY expression .
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
     $default  reduce using rule 64 (expression)
 
 
-state 112
+state 116
 
    54 expression: expression . T_OR expression
    55           | expression . T_AND expression
@@ -2074,29 +2208,29 @@ state 112
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   67           | math_operator "(" expression . ")"
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   69           | math_operator "(" expression . ")"
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    ")"              shift, and go to state 122
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    ")"              shift, and go to state 126
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
 
-state 113
+state 117
 
    23 parameter: "identifier" "=" expression .
    54 expression: expression . T_OR expression
@@ -2112,59 +2246,59 @@ state 113
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 23 (parameter)
 
 
-state 114
+state 118
 
    21 parameter_list: parameter_list "," parameter .
 
     $default  reduce using rule 21 (parameter_list)
 
 
-state 115
+state 119
 
    37 statement_block: "{" statement_block_creator statement_list "}" . end_of_statement_block
 
     $default  reduce using rule 39 (end_of_statement_block)
 
-    end_of_statement_block  go to state 123
+    end_of_statement_block  go to state 127
 
 
-state 116
+state 120
 
    40 statement_list: statement_list statement .
 
     $default  reduce using rule 40 (statement_list)
 
 
-state 117
+state 121
 
    43 statement: assign_statement . ";"
 
-    ";"  shift, and go to state 124
+    ";"  shift, and go to state 128
 
 
-state 118
+state 122
 
    44 assign_statement: variable . "=" expression
    45                 | variable . "+=" expression
@@ -2172,150 +2306,156 @@ state 118
    47                 | variable . "++"
    48                 | variable . "--"
 
-    "="   shift, and go to state 125
-    "+="  shift, and go to state 126
-    "-="  shift, and go to state 127
-    "++"  shift, and go to state 128
-    "--"  shift, and go to state 129
+    "="   shift, and go to state 129
+    "+="  shift, and go to state 130
+    "-="  shift, and go to state 131
+    "++"  shift, and go to state 132
+    "--"  shift, and go to state 133
 
 
-state 119
+state 123
 
    33 check_animation_parameter: object_type "identifier" .
 
     $default  reduce using rule 33 (check_animation_parameter)
 
 
-state 120
+state 124
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter ")" . "{" statement_list "}" end_of_statement_block
 
-    "{"  shift, and go to state 130
+    "{"  shift, and go to state 134
 
 
-state 121
+state 125
 
    50 variable: "identifier" "[" expression "]" .
    52         | "identifier" "[" expression "]" . "." "identifier"
 
-    "."  shift, and go to state 131
+    "."  shift, and go to state 135
 
     $default  reduce using rule 50 (variable)
 
 
-state 122
+state 126
 
-   67 expression: math_operator "(" expression ")" .
+   69 expression: math_operator "(" expression ")" .
 
-    $default  reduce using rule 67 (expression)
+    $default  reduce using rule 69 (expression)
 
 
-state 123
+state 127
 
    37 statement_block: "{" statement_block_creator statement_list "}" end_of_statement_block .
 
     $default  reduce using rule 37 (statement_block)
 
 
-state 124
+state 128
 
    43 statement: assign_statement ";" .
 
     $default  reduce using rule 43 (statement)
 
 
-state 125
+state 129
 
    44 assign_statement: variable "=" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 132
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 136
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 126
+state 130
 
    45 assign_statement: variable "+=" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 133
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 137
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 127
+state 131
 
    46 assign_statement: variable "-=" . expression
 
     "true"             shift, and go to state 45
     "false"            shift, and go to state 46
     "("                shift, and go to state 47
-    "int constant"     shift, and go to state 48
-    "double constant"  shift, and go to state 49
-    "string constant"  shift, and go to state 50
-    "identifier"       shift, and go to state 51
+    "-"                shift, and go to state 48
+    "!"                shift, and go to state 49
+    "int constant"     shift, and go to state 50
+    "double constant"  shift, and go to state 51
+    "string constant"  shift, and go to state 52
+    "identifier"       shift, and go to state 53
 
-    "("  [reduce using rule 77 (math_operator)]
+    "("  [reduce using rule 79 (math_operator)]
 
-    variable            go to state 52
-    expression          go to state 134
-    primary_expression  go to state 54
-    math_operator       go to state 55
+    variable            go to state 54
+    expression          go to state 138
+    primary_expression  go to state 56
+    math_operator       go to state 57
 
 
-state 128
+state 132
 
    47 assign_statement: variable "++" .
 
     $default  reduce using rule 47 (assign_statement)
 
 
-state 129
+state 133
 
    48 assign_statement: variable "--" .
 
     $default  reduce using rule 48 (assign_statement)
 
 
-state 130
+state 134
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter ")" "{" . statement_list "}" end_of_statement_block
 
-    $default  reduce using rule 78 (empty)
+    $default  reduce using rule 80 (empty)
 
-    statement_list  go to state 135
-    empty           go to state 91
+    statement_list  go to state 139
+    empty           go to state 95
 
 
-state 131
+state 135
 
    52 variable: "identifier" "[" expression "]" "." . "identifier"
 
-    "identifier"  shift, and go to state 136
+    "identifier"  shift, and go to state 140
 
 
-state 132
+state 136
 
    44 assign_statement: variable "=" expression .
    54 expression: expression . T_OR expression
@@ -2331,29 +2471,29 @@ state 132
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 44 (assign_statement)
 
 
-state 133
+state 137
 
    45 assign_statement: variable "+=" expression .
    54 expression: expression . T_OR expression
@@ -2369,29 +2509,29 @@ state 133
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 45 (assign_statement)
 
 
-state 134
+state 138
 
    46 assign_statement: variable "-=" expression .
    54 expression: expression . T_OR expression
@@ -2407,61 +2547,61 @@ state 134
    64           | expression . T_MULTIPLY expression
    65           | expression . T_DIVIDE expression
    66           | expression . T_MOD expression
-   68           | expression . "near" expression
-   69           | expression . "touches" expression
+   70           | expression . "near" expression
+   71           | expression . "touches" expression
 
-    "touches"        shift, and go to state 70
-    "near"           shift, and go to state 71
-    "+"              shift, and go to state 72
-    "-"              shift, and go to state 73
-    T_OR             shift, and go to state 74
-    T_AND            shift, and go to state 75
-    T_NOT_EQUAL      shift, and go to state 76
-    T_EQUAL          shift, and go to state 77
-    T_GREATER_EQUAL  shift, and go to state 78
-    T_LESS_EQUAL     shift, and go to state 79
-    T_GREATER        shift, and go to state 80
-    T_LESS           shift, and go to state 81
-    T_MOD            shift, and go to state 82
-    T_DIVIDE         shift, and go to state 83
-    T_MULTIPLY       shift, and go to state 84
+    "touches"        shift, and go to state 74
+    "near"           shift, and go to state 75
+    "+"              shift, and go to state 76
+    "-"              shift, and go to state 77
+    T_OR             shift, and go to state 78
+    T_AND            shift, and go to state 79
+    T_NOT_EQUAL      shift, and go to state 80
+    T_EQUAL          shift, and go to state 81
+    T_GREATER_EQUAL  shift, and go to state 82
+    T_LESS_EQUAL     shift, and go to state 83
+    T_GREATER        shift, and go to state 84
+    T_LESS           shift, and go to state 85
+    T_MOD            shift, and go to state 86
+    T_DIVIDE         shift, and go to state 87
+    T_MULTIPLY       shift, and go to state 88
 
     $default  reduce using rule 46 (assign_statement)
 
 
-state 135
+state 139
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter ")" "{" statement_list . "}" end_of_statement_block
    40 statement_list: statement_list . statement
 
-    "}"           shift, and go to state 137
-    "identifier"  shift, and go to state 51
+    "}"           shift, and go to state 141
+    "identifier"  shift, and go to state 53
 
     "}"           [reduce using rule 42 (statement)]
     "identifier"  [reduce using rule 42 (statement)]
 
-    statement         go to state 116
-    assign_statement  go to state 117
-    variable          go to state 118
+    statement         go to state 120
+    assign_statement  go to state 121
+    variable          go to state 122
 
 
-state 136
+state 140
 
    52 variable: "identifier" "[" expression "]" "." "identifier" .
 
     $default  reduce using rule 52 (variable)
 
 
-state 137
+state 141
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter ")" "{" statement_list "}" . end_of_statement_block
 
     $default  reduce using rule 39 (end_of_statement_block)
 
-    end_of_statement_block  go to state 138
+    end_of_statement_block  go to state 142
 
 
-state 138
+state 142
 
    32 animation_block: "animation" "identifier" "(" check_animation_parameter ")" "{" statement_list "}" end_of_statement_block .
 

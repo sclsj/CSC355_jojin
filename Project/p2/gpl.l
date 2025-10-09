@@ -74,16 +74,6 @@ void get_string_value()
   yylval.union_string = new string(yytext);
 }
  
-void error()
-{
-  // have the error handling object report the problem
-  // note: it uses line_count as a global variable
-  error_handler.error(Error::ILLEGAL_TOKEN, yytext);
-
-  // create a string to hold the current text
-  // put that string in the yylval union so it can be used by parser (.y file)
-  yylval.union_string = new string(yytext);
-}
 
 
 
@@ -190,6 +180,6 @@ void error()
 [0-9]+          			get_int_value(); return T_INT_CONSTANT;
 [0-9]+\.[0-9]*|\.[0-9]+		get_double_value(); return T_DOUBLE_CONSTANT;
 [A-Za-z_]+[A-Za-z0-9_]*     get_string_value(); return T_ID;
-\"([^"]*)\"					yylval.union_string = new string(yytext, 1, yyleng - 2); return T_STRING_CONSTANT;
+\"([^"\n\r]*)\"					yylval.union_string = new string(yytext, 1, yyleng - 2); return T_STRING_CONSTANT;
 
-.               error(); return T_ERROR;
+.               	 return emit_error(T_ERROR);

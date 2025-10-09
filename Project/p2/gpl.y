@@ -146,7 +146,7 @@ int undeclared = 0;
 %left T_LESS T_GREATER T_LESS_EQUAL T_GREATER_EQUAL
 %left T_PLUS T_MINUS
 %left T_MULTIPLY T_DIVIDE T_MOD
-%nonassoc UNARY_OP
+%nonassoc UNARY_OPS
 
 %%
 
@@ -365,8 +365,8 @@ expression:
     | expression T_MULTIPLY expression
     | expression T_DIVIDE expression
     | expression T_MOD expression
-//    | T_MINUS  expression %prec UNARY_OPS
-//    | T_NOT  expression %prec UNARY_OPS
+    | T_MINUS  expression %prec UNARY_OPS
+    | T_NOT  expression %prec UNARY_OPS
     | math_operator T_LPAREN expression T_RPAREN
     | expression T_NEAR expression
     | expression T_TOUCHES expression
