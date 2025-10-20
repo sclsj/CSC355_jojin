@@ -209,17 +209,316 @@
 \draw (34.65,-21.16) node [above] {$\varepsilon$};
 \end{tikzpicture}
     
+    \begin{align}
+	\epsilon\text{-closure}(1)=\{1,2,3,4,6,7,8,10,11,12\}:A
+	\\
+	\epsilon\text{-closure}(\text{move}(A,a))=\epsilon\text{-closure}(\{5\})=\{2,3,4,5,6,7,8,10,11,12\}:B
+	\\
+	\epsilon\text{-closure}(\text{move}(A,b))=\epsilon\text{-closure}(\{9\})=\{2,3,4,6,7,8,9,10,11,12\}:C
+	\\
+	\epsilon\text{-closure}(\text{move}(B,a))=\epsilon\text{-closure}(\{5\})=B
+	\\
+	\epsilon\text{-closure}(\text{move}(B,b))=\epsilon\text{-closure}(\{9\})=C
+	\\
+	\epsilon\text{-closure}(\text{move}(C,a))=\epsilon\text{-closure}(\{5\})=B
+	\\
+	\epsilon\text{-closure}(\text{move}(C,b))=\epsilon\text{-closure}(\{9\})=C
+\end{align}
+
+We get the same DFA, so we can use the graph earlier:
+
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=28mm,semithick]
+  \tikzstyle{every state}=[draw=black,thick,minimum width=18mm,minimum height=10mm]
+
+  % States
+  \node[state,initial,accepting] (A) {$A$};
+  \node[state,accepting] (B) [right=of A] {$B$};
+  \node[state,accepting] (C) [below=18mm of B] {$C$};
+
+  % Transitions
+  \path[->]
+    (A) edge[above] node{$a$} (B)
+    (A) edge[bend right=12,left] node{$b$} (C)
+
+    (B) edge[loop above] node{$a$} ()
+    ([xshift=1mm]B.south) edge[right] node{$b$} ([xshift=1mm]C.north)
+
+    ([xshift=-1mm]C.north) edge[left] node{$a$} ([xshift=-1mm]B.south)
+    (C) edge[loop right] node{$b$} ();
+\end{tikzpicture}
+    
+    
+    
     
     
     \item[3.] [10 Points] $c(c|d)^*dd$
+    
+    \begin{tikzpicture}[
+  >=stealth',
+  shorten >=1pt,
+  auto,
+  semithick,
+  scale=0.8, transform shape, % <— scales entire diagram to fit page
+  bend left/.style={out=45,in=135},
+  bend right/.style={out=-45,in=-135}
+]
+  \tikzstyle{every state}=[draw=black,thick,minimum size=10mm]
+
+  % Main nodes
+  \node[state, initial] (q1) at (0,0) {1};
+  \node[state] (q2) at (1.8,0) {2};
+  \node[state] (q3) at (3.6,0) {3};
+  \node[state] (q4) at (5.4,0) {4};
+
+  % Union branches
+  \node[state] (q5) at (7.0,1.3) {5};
+  \node[state] (q6) at (8.8,1.3) {6};
+  \node[state] (q7) at (7.0,-1.3) {7};
+  \node[state] (q8) at (8.8,-1.3) {8};
+  \node[state] (q9) at (10.6,0) {9};
+  \node[state] (q10) at (12.4,0) {10};
+
+  % Final dd
+  \node[state] (q11) at (14.0,0) {11};
+  \node[state] (q12) at (15.6,0) {12};
+  \node[state] (q13) at (17.2,0) {13};
+  \node[state, accepting] (q14) at (18.8,0) {14};
+
+  % --- Edges ---
+  \path[->] (q1) edge node {$c$} (q2);
+  \path[->] (q2) edge node {$\varepsilon$} (q3);
+
+  % Star entry
+  \path[->] (q3) edge node[above] {$\varepsilon$} (q4);
+  \path[->] (q3) edge[bend right, looseness=1.1] node[below] {$\varepsilon$} (q10);
+
+  % Union
+  \path[->] (q4) edge node[left] {$\varepsilon$} (q5);
+  \path[->] (q4) edge node[left] {$\varepsilon$} (q7);
+  \path[->] (q5) edge node {$c$} (q6);
+  \path[->] (q6) edge node[above] {$\varepsilon$} (q9);
+  \path[->] (q7) edge node[below] {$d$} (q8);
+  \path[->] (q8) edge node[below] {$\varepsilon$} (q9);
+
+  % Star loop and exit
+  \path[->] (q9) edge[looseness=1.5] node[above] {$\varepsilon$} (q4);
+  \path[->] (q9) edge node {$\varepsilon$} (q10);
+
+  % Final dd
+  \path[->] (q10) edge node {$\varepsilon$} (q11);
+  \path[->] (q11) edge node {$d$} (q12);
+  \path[->] (q12) edge node {$\varepsilon$} (q13);
+  \path[->] (q13) edge node {$d$} (q14);
+\end{tikzpicture}
+
+\begin{align}
+	\epsilon\text{-closure}(1)=\{1\}:A
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(A,c))=\epsilon\text{-closure}(\{2\})=\{2,3,4,5,7,10,11\}:B
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(A,d))=\epsilon\text{-closure}(\{\})=\{\}:C
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(B,c))=\epsilon\text{-closure}(\{6\})=\{4, 5, 6, 7, 9, 10, 11\}: D
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(B,d))=\epsilon\text{-closure}(\{8, 12\})=\{4, 5, 7, 8, 9, 10, 11, 12, 13\}: E
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(C,c))=\epsilon\text{-closure}(\{\})=C
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(C,d))=\epsilon\text{-closure}(\{\})=C
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(D,c))=\epsilon\text{-closure}(\{6\})=D
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(D,d))=\epsilon\text{-closure}(\{8, 12\})=E
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(E,c))=\epsilon\text{-closure}(\{6\})=D
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(E,d))=\epsilon\text{-closure}(\{8, 12, 14\})=\{4, 5, 7, 8, 9, 10, 11, 12, 13, 14\}:F
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(F,c))=\epsilon\text{-closure}(\{6\})=D
+	\notag\\
+	\epsilon\text{-closure}(\text{move}(F,d))=\epsilon\text{-closure}(\{8, 12, 14\})=F
+\end{align}
+
+\begin{tikzpicture}[
+  >=stealth',shorten >=1pt,auto,semithick,
+  scale=1, transform shape
+]
+  \tikzstyle{every state}=[draw=black,thick,minimum size=10mm]
+
+  % Nodes (laid out roughly left->right)
+  \node[state, initial]      (D0) at (0,0)    {A};
+  \node[state]               (D1) at (3,0)  {B};
+  \node[state]               (D3) at (6,0)  {D};
+  \node[state]               (D4) at (3,-3) {E};
+  \node[state, accepting]    (D5) at (6,-3) {F};
+
+  % Dead state beneath D1
+  \node[state]               (D2) at (0,-3) {C};
+
+  % Edges
+  \path[->] (D0) edge node {$c$} (D1);
+  \path[->] (D0) edge node[right] {$d$} (D2);
+
+  \path[->] (D1) edge node {$c$} (D3);
+  \path[->] (D1) edge node {$d$} (D4);
+
+  \path[->] (D2) edge[loop below] node {$c,d$} (D2);
+
+  \path[->] (D3) edge[loop above] node {$c$} (D3);
+  
+  
+  
+  \path[->] ([xshift=-4mm]D3.south) edge node {$d$} ([xshift=-1mm,yshift=3mm]D4.east);
+
+  \path[->] ([xshift=4mm]D4.north) edge node {$c$} ([xshift=1mm,yshift=-3mm]D3.west);
+  
+  
+  
+  \path[->] (D4) edge node {$d$} (D5);
+
+  \path[->] (D5) edge node {$c$} (D3);
+  \path[->] (D5) edge[loop below] node {$d$} (D5);
+\end{tikzpicture}
+
+    
     \item[4.] [15 Points] $(a|b)a(a|b)b$
+
+\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick,scale=0.7, transform shape,]
+  \tikzstyle{every state}=[draw=black,thick,minimum size=10mm]
+
+  % Row layout helpers
+  % Left block (first (a|b))
+  \node[state, initial] (q1) {1};
+
+  \node[state] (q2) [above right=0.9cm and 1.9cm of q1] {2};
+  \node[state] (q3) [right=1.6cm of q2] {3};
+
+  \node[state] (q4) [below right=0.9cm and 1.9cm of q1] {4};
+  \node[state] (q5) [right=1.6cm of q4] {5};
+
+  \node[state] (q6) [right=2.0cm of q3, yshift=-1.6cm] {6};
+
+  % Middle literal 'a'
+  \node[state] (q7) [right=1.8cm of q6] {7};
+
+  % Right block (second (a|b))
+  \node[state] (q8) [above right=0.9cm and 1.9cm of q7] {8};
+  \node[state] (q9) [right=1.6cm of q8] {9};
+
+  \node[state] (q10) [below right=0.9cm and 1.9cm of q7] {10};
+  \node[state] (q11) [right=1.6cm of q10] {11};
+
+  \node[state] (q12) [right=2.0cm of q9, yshift=-1.6cm] {12};
+
+  % Final 'b' and accept
+  \node[state, accepting] (q13) [right=1.8cm of q12] {13};
+
+  % Edges: first (a|b)
+  \path
+    (q1) edge[above left] node{$\epsilon$} (q2)
+    (q1) edge[below left] node{$\epsilon$} (q4)
+
+    (q2) edge[above] node{$a$} (q3)
+    (q4) edge[below] node{$b$} (q5)
+
+    (q3) edge[above] node{$\epsilon$} (q6)
+    (q5) edge[below] node{$\epsilon$} (q6);
+
+  % Literal 'a'
+  \path (q6) edge[above] node{$a$} (q7);
+
+  % Edges: second (a|b)
+  \path
+    (q7) edge[above left] node{$\epsilon$} (q8)
+    (q7) edge[below left] node{$\epsilon$} (q10)
+
+    (q8) edge[above] node{$a$} (q9)
+    (q10) edge[below] node{$b$} (q11)
+
+    (q9) edge[above] node{$\epsilon$} (q12)
+    (q11) edge[below] node{$\epsilon$} (q12);
+
+  % Final 'b'
+  \path (q12) edge[above] node{$b$} (q13);
+\end{tikzpicture}
+Here we removed the $\varepsilon$ in concatenation to simplify.
+\begin{align}
+	\epsilon\text{-closure}(1)=\{1,2,4\}:A
+	\\
+	\epsilon\text{-closure}(\text{move}(A,a))=\epsilon\text{-closure}(\{3\})=\{3, 6\}:B
+	\\
+	\epsilon\text{-closure}(\text{move}(A,b))=\epsilon\text{-closure}(\{5\})=\{5, 6\}:C
+	\\
+	\epsilon\text{-closure}(\text{move}(B,a))=\epsilon\text{-closure}(\{7\})=\{7, 8, 10\}:D
+	\\
+	\epsilon\text{-closure}(\text{move}(B,b))=\epsilon\text{-closure}(\{\})=\{\}:E
+	\\
+	\epsilon\text{-closure}(\text{move}(C,a))=\epsilon\text{-closure}(\{7\})=D
+	\\
+	\epsilon\text{-closure}(\text{move}(C,b))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(D,a))=\epsilon\text{-closure}(\{9\})=\{9,12\}:F
+	\\
+	\epsilon\text{-closure}(\text{move}(D,b))=\epsilon\text{-closure}(\{11\})=\{11,12\}=G
+	\\
+	\epsilon\text{-closure}(\text{move}(E,a))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(E,b))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(F,a))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(F,b))=\epsilon\text{-closure}(\{13\})=\{13\}:H
+	\\
+	\epsilon\text{-closure}(\text{move}(G,a))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(G,b))=\epsilon\text{-closure}(\{13\})=H
+	\\
+	\epsilon\text{-closure}(\text{move}(H,a))=\epsilon\text{-closure}(\{\})=E
+	\\
+	\epsilon\text{-closure}(\text{move}(H,b))=\epsilon\text{-closure}(\{\})=E
+\end{align}
+    \begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=2.0cm,semithick]
+  \tikzstyle{every state}=[draw=black,thick,minimum size=9mm]
+
+  % States
+  \node[state, initial] (A) {A};
+  \node[state] (B) [right=2.2cm of A] {B};
+  \node[state] (C) [below=1.6cm of B] {C};
+  \node[state] (D) [right=2.2cm of B] {D};
+  \node[state] (E) [below=1.6cm of D] {E};
+  \node[state] (F) [right=2.2cm of D] {F};
+  \node[state] (G) [below=1.6cm of F] {G};
+  \node[state, accepting] (H) [right=2.2cm of F, yshift=0cm] {H};
+
+  % Transitions
+  \path[->]
+    (A) edge[above] node{$a$} (B)
+        edge[left]  node{$b$} (C)
+
+    (B) edge[above] node{$a$} (D)
+        edge[left, above]  node[xshift=25pt, yshift=-20pt]{$b$} (E)
+
+    (C) edge[above] node[xshift=15pt, yshift=12pt]{$a$} (D)
+        edge[left, below]  node{$b$} (E)
+
+    (D) edge[above] node{$a$} (F)
+        edge[right] node[xshift=23pt, yshift=-15pt]{$b$} (G)
+
+    (F) edge[above] node{$b$} (H)
+        edge[left] node[xshift=-15pt, yshift=-12pt]{$a$} (E)
+
+    (G) edge[right] node{$b$} (H)
+        edge[left, below] node{$a$} (E)
+
+    (H) edge[bend left=12300] node{$a,b$} (E)
+
+    (E) edge[loop below] node{$a,b$} ();
+
+\end{tikzpicture}
+
 \end{enumerate}
 
 \newpage
-
-\fancyhead[L]{CSC 355 Fall 2025}
-\fancyhead[C]{\textbf{Homework 2}}
-\fancyhead[R]{\textbf{Due: Thursday, 10/16/2025 11:59 PM}}
 
 \noindent\textbf{[15 Points] Question 2: Derivations}
 
