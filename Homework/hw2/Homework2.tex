@@ -253,12 +253,12 @@ We get the same DFA, so we can use the graph earlier:
     
     \item[3.] [10 Points] $c(c|d)^*dd$
     
-    \begin{tikzpicture}[
+    \hspace*{-4cm}\begin{tikzpicture}[
   >=stealth',
   shorten >=1pt,
   auto,
   semithick,
-  scale=0.8, transform shape, % <— scales entire diagram to fit page
+  scale=1.02, transform shape, % <— scales entire diagram to fit page
   bend left/.style={out=45,in=135},
   bend right/.style={out=-45,in=-135}
 ]
@@ -341,7 +341,7 @@ We get the same DFA, so we can use the graph earlier:
 
 \begin{tikzpicture}[
   >=stealth',shorten >=1pt,auto,semithick,
-  scale=1, transform shape
+  scale=1.5, transform shape
 ]
   \tikzstyle{every state}=[draw=black,thick,minimum size=10mm]
 
@@ -383,7 +383,7 @@ We get the same DFA, so we can use the graph earlier:
     
     \item[4.] [15 Points] $(a|b)a(a|b)b$
 
-\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick,scale=0.7, transform shape,]
+\hspace*{-4cm}\begin{tikzpicture}[>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick,scale=0.88, transform shape,]
   \tikzstyle{every state}=[draw=black,thick,minimum size=10mm]
 
   % Row layout helpers
@@ -515,6 +515,59 @@ Here we removed the $\varepsilon$ in concatenation to simplify.
     (E) edge[loop below] node{$a,b$} ();
 
 \end{tikzpicture}
+
+Tables:
+
+\begin{table}[h!]\centering
+\setlength{\tabcolsep}{6pt}
+\renewcommand{\arraystretch}{1.1}
+\begin{tabular}{cccc}
+% ==== Q1 ====
+\begin{tabular}{c|cc}
+\multicolumn{3}{c}{}\\
+\textbf{Q1}  & $a$ & $b$\\\hline
+A &  B   &   C  \\
+B &  B   &   C  \\
+C &  B   &   C  \\
+\end{tabular}
+&
+% ==== Q2 ====
+\begin{tabular}{c|cc}
+\multicolumn{3}{c}{}\\
+\textbf{Q2}  & $a$ & $b$\\\hline
+A &  B   &  C   \\
+B &  B   &  C   \\
+C &  B   &  C   \\
+\end{tabular}
+&
+% ==== Q3 ====
+\begin{tabular}{c|cc}
+\multicolumn{3}{c}{}\\
+\textbf{Q3}  & $c$ & $d$\\\hline
+A &  B   &  C   \\
+B &  D   &  E   \\
+C &  C   &  C   \\
+D &  D   &  E   \\
+E &  D   &  F   \\
+F &  D   &  F   \\
+\end{tabular}
+&
+% ==== Q4 ====
+\begin{tabular}{c|cc}
+\multicolumn{3}{c}{}\\
+\textbf{Q4:}  & $a$ & $b$\\\hline
+A &  B   &  C   \\
+B &  D   &  E   \\
+C &  D   &  E   \\
+D &  F   &  G   \\
+E &  E   &  E   \\
+F &  E   &  H   \\
+G &  E   &  H   \\
+H &  E   &  E   \\
+\end{tabular}
+\end{tabular}
+\end{table}
+
 
 \end{enumerate}
 
