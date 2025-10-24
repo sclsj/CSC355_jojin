@@ -38,6 +38,6 @@ void Symbol_table::print(ostream &os) const {
     vector<pair<string, Symbol*>> sorted(m_symbols.begin(), m_symbols.end());
     sort(sorted.begin(), sorted.end(), [](auto a, auto b){return a.first < b.first;});
     for (const auto& i : sorted) {
-        cout << i.second->get_type() << " " << i.second->get_name() << "=";
+        i.second->print(os);
     }
 }

@@ -35,7 +35,7 @@ class Symbol
     Gpl_type get_base_type() const;
 
     bool is_array() const {return m_type & ARRAY;}
-    bool index_within_range(int index) 
+    bool index_within_range(int index)
     {assert(is_array()); return 0 <= index && index < m_size;}
 
     // should not ask the size of a symbol if it is not an array
@@ -62,8 +62,8 @@ class Symbol
     void validate() const;  // put all paranoid asserts here
 
     Gpl_type m_type = NO_TYPE;
-    std::string m_name = "";
-    void *m_data_void_ptr = NULL;
+    std::string m_name;
+    void *m_data_void_ptr = nullptr;
     int m_size = 0;
 };
 

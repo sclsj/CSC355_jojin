@@ -62,6 +62,37 @@ Symbol::Symbol(std::string name, Gpl_type type, int size) {
     validate();
 }
 
+int Symbol::get_int_value(int index) const {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == INT);
+        return *static_cast<int*>(m_data_void_ptr);
+    }
+    // symbol is int array
+    validate_type_and_index(INT_ARRAY, index);
+    return *(static_cast<int*>(m_data_void_ptr) + index);
+}
+
+double Symbol::get_double_value(int index) const {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == DOUBLE);
+        return *static_cast<double*>(m_data_void_ptr);
+    }
+    // symbol is double array
+    validate_type_and_index(DOUBLE_ARRAY, index);
+    return *(static_cast<double*>(m_data_void_ptr) + index);
+}
+
+string Symbol::get_string_value(int index) const {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == STRING);
+        return *static_cast<string*>(m_data_void_ptr);
+    }
+    // symbol is string array
+    validate_type_and_index(STRING_ARRAY, index);
+    return *(static_cast<string*>(m_data_void_ptr) + index);
+}
+
+
 Symbol::~Symbol()
 {
   // The Symbol "owns" the object it contains, it must delete it
@@ -111,5 +142,24 @@ void Symbol::validate() const
   assert(m_data_void_ptr != nullptr);
   assert(!m_name.empty());
   assert(m_size != 0);
+}
+
+void Symbol::print(ostream &os) const {
+    switch(m_type) {
+        case INT: {
+            os << "int " << m_name << " = " << get_int_value();
+            break;
+        }
+        case DOUBLE: {
+            os << "double " << m_name << " = " << get_double_value();
+            break;
+        }
+        case STRING: {
+            os << "string " << m_name << " = " << "\"" << get_string_value() << "\"";
+            break;
+        }
+        default:
+            os << "unhandled type";
+    }
 }
 
