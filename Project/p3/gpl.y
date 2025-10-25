@@ -10,6 +10,10 @@
 #include <sstream>
 #include <cmath> // for floor()
 #include <stack>
+
+// symbol table
+#include "symbol_table.h"
+#include "symbol.h"
 using namespace std;
 
 extern int yylex();
@@ -24,6 +28,7 @@ int undeclared = 0;
   int              union_int;
   double			union_double;
   std::string      *union_string;
+  Gpl_type         union_gpl_type;
 }
 
 
@@ -124,15 +129,15 @@ int undeclared = 0;
 %token T_AND              "&&"
 %token T_OR                "||"
 
-%token T_INT_CONSTANT        "int constant"
-%token T_DOUBLE_CONSTANT     "double constant"
-%token T_STRING_CONSTANT     "string constant"
-%token T_ID			         "identifier"
+%token <union_int> T_INT_CONSTANT        "int constant"
+%token <union_double> T_DOUBLE_CONSTANT     "double constant"
+%token <union_string> T_STRING_CONSTANT     "string constant"
+%token <union_string>  T_ID			         "identifier"
 
 
 // COMPLETE ME
 
-
+%type  <union_gpl_type>    simple_type
 
 %token T_ERROR               "error"
 
@@ -173,14 +178,55 @@ declaration:
 //---------------------------------------------------------------------
 variable_declaration:
     simple_type  T_ID  optional_initializer
-    | simple_type  T_ID  T_LBRACKET expression T_RBRACKET
+    {
+        string name = *$2;
+        Symbol_table *table = Symbol_table::instance();
+        if (table->lookup(name) != nullptr){
+            Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
+        }
+        else {
+            switch($1) {
+                case INT:
+                    table->insert(new Symbol(name, DEFAULT_INT_VALUE));
+                case DOUBLE:
+                    table->insert(new Symbol(name, DEFAULT_DOUBLE_VALUE));
+                case STRING:
+                    table->insert(new Symbol(name, DEFAULT_STRING_VALUE));
+            }
+        }
+    }
+//    | simple_type  T_ID  T_LBRACKET expression T_RBRACKET
+    | simple_type T_ID T_LBRACKET T_INT_CONSTANT T_RBRACKET
+    {
+        string name = *$2;
+        Symbol_table *table = Symbol_table::instance();
+        int size = $4;
+        if (table->lookup(name) != nullptr){
+            Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
+        }
+        else {
+            if (size <= 1){
+                Error::error(Error::INVALID_ARRAY_SIZE, name, to_string(size));
+            }
+            else {
+                switch($1) {
+                    case INT:
+                        table->insert(new Symbol(name, INT_ARRAY, $4));
+                    case DOUBLE:
+                        table->insert(new Symbol(name, DOUBLE_ARRAY, $4));
+                    case STRING:
+                        table->insert(new Symbol(name, STRING_ARRAY, $4));
+                }
+            }
+        }
+    }
     ;
 
 //---------------------------------------------------------------------
 simple_type:
-    T_INT
-    | T_DOUBLE
-    | T_STRING
+    T_INT { $$ = INT; }
+    | T_DOUBLE { $$ = DOUBLE; }
+    | T_STRING { $$ = STRING; }
     ;
 
 //---------------------------------------------------------------------

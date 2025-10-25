@@ -3,9 +3,9 @@
 
 using namespace std;
 
-constexpr int DEFAULT_INT_VALUE = 42;
-constexpr double DEFAULT_DOUBLE_VALUE = 3.14159;
-const std::string DEFAULT_STRING_VALUE = "Hello World";
+//constexpr int DEFAULT_INT_VALUE = 42;
+//constexpr double DEFAULT_DOUBLE_VALUE = 3.14159;
+//const std::string DEFAULT_STRING_VALUE = "Hello World";
 
 Symbol::Symbol(std::string name, int initial_value){
     m_name = name;
@@ -57,7 +57,7 @@ Symbol::Symbol(std::string name, Gpl_type type, int size) {
         }
 
         default:
-            cerr << "Array type not implemented..." << endl;
+            cerr << "Array type not implemented:" << type << endl;
     }
     validate();
 }
@@ -147,19 +147,36 @@ void Symbol::validate() const
 void Symbol::print(ostream &os) const {
     switch(m_type) {
         case INT: {
-            os << "int " << m_name << " = " << get_int_value();
+            os << "int " << m_name << " = " << get_int_value() << endl;
             break;
         }
         case DOUBLE: {
-            os << "double " << m_name << " = " << get_double_value();
+            os << "double " << m_name << " = " << get_double_value() << endl;
             break;
         }
         case STRING: {
-            os << "string " << m_name << " = " << "\"" << get_string_value() << "\"";
+            os << "string " << m_name << " = " << "\"" << get_string_value() << "\"" << endl;
             break;
         }
+        case INT_ARRAY:{
+            for (int i = 0; i < m_size; i++)
+                os << "int " << m_name << "[" << i << "] = " << get_int_value(i) << endl;
+            break;
+        }
+
+        case DOUBLE_ARRAY: {
+            for (int i = 0; i < m_size; i++)
+                os << "double " << m_name << "[" << i << "] = " << get_double_value(i) << endl;
+            break;
+        }
+
+        case STRING_ARRAY: {
+            for (int i = 0; i < m_size; i++)
+                os << "string " << m_name << "[" << i << "] = " << "\"" << get_string_value(i) << "\"" << endl;
+            break;
         default:
             os << "unhandled type";
+            }
     }
 }
 

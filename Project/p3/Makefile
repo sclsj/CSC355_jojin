@@ -24,7 +24,7 @@ KERNEL_NAME := $(shell sh -c 'uname -s 2>/dev/null || echo not')
 
 # assume the current directory is the phase name
 #   /home/.../p4   is the directory where you will keep p4
-PHASE := $(notdir $(CURDIR))
+PHASE := p3
 
 # set up the command line options to define pre-processor variables
 # -DSYMBOL_TABLE has same effect of adding "#define SYMBOL_TABLE" to .cpp file
