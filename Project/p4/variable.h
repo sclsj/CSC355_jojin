@@ -51,7 +51,7 @@ class Variable
     Variable(Symbol *symbol, Expression *expression);
 
     std::string get_name() const;
-    bool is_array() const {return m_expression != NULL;}
+    bool is_array() const {return m_expression != nullptr;}
 
     // Getter functions.The functions return the value of the variable stored in 
     // the symbol's m_data_void_ptr. The functions need to handle two different types of
@@ -84,7 +84,7 @@ class Variable
     // if index is out of bounds, issue error, return 0 (0 is always in bounds)
     int eval_index_with_error_checking() const;
 
-    Symbol *m_symbol = NULL;
+    Symbol *m_symbol = nullptr;
     Gpl_type m_type = NO_TYPE;
     // The variable object sets m_expression pointer to the expression object
     // that represents an index of an array. For example,
@@ -92,7 +92,7 @@ class Variable
     // arr[k] : k is an expression.
     // arra[k+2] : k+2 is an expression.
     // Non-array variable object's m_expressions remains NULL.
-    Expression *m_expression = NULL;
+    Expression *m_expression = nullptr;
 };
 
 

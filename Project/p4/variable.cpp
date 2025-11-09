@@ -9,12 +9,16 @@ using namespace std;
 
 Variable::Variable(Symbol *symbol)
 {
-    // COMPLETE ME
+    m_type = symbol->get_type();
+    m_symbol = symbol;
+    m_expression = nullptr;
 }
 
 Variable::Variable(Symbol *symbol, Expression *expression)
 {
-    // COMPLETE ME
+    m_type = symbol->get_type();
+    m_symbol = symbol;
+    m_expression = expression;
 }
 
 string Variable::get_name() const
@@ -30,36 +34,77 @@ string Variable::get_name() const
 
 int Variable::get_int_value() const
 {
-    // COMPLETE ME
+    assert (m_symbol);
+    if (is_array()) {
+        return m_symbol->get_int_value(eval_index_with_error_checking());
+    }
+    return m_symbol->get_int_value();
 }
 
 double Variable::get_double_value() const
 {
-    // COMPLETE ME
+    assert (m_symbol);
+    if (is_array()) {
+        return m_symbol->get_double_value(eval_index_with_error_checking());
+    }
+    return m_symbol->get_double_value();
 }
 
 string Variable::get_string_value() const
 {
-    // COMPLETE ME
+    assert (m_symbol);
+    if (is_array()) {
+        return m_symbol->get_string_value(eval_index_with_error_checking());
+    }
+    return m_symbol->get_string_value();
 }
 
 void Variable::set(int value)
 {
-    // COMPLETE ME
+    assert(m_symbol);
+    if (is_array()) {
+        m_symbol->set(value, eval_index_with_error_checking());
+    }
+    else {
+        m_symbol->set(value);
+    }
 }
 
 void Variable::set(double value)
 {
-    // COMPLETE ME
+    assert(m_symbol);
+    if (is_array()) {
+        m_symbol->set(value, eval_index_with_error_checking());
+    }
+    else {
+        m_symbol->set(value);
+    }
 }
 
 void Variable::set(string value)
 {
-    // COMPLETE ME
+    assert(m_symbol);
+    if (is_array()) {
+        m_symbol->set(value, eval_index_with_error_checking());
+    }
+    else {
+        m_symbol->set(value);
+    }
 }
 
-// Evaluate expression if there is one, return index if index is out of bounds, 
-// issue error, return 0 (0 is always in bounds)
+/**
+ * @brief Evaluate the array index expression and ensure it is within bounds.
+ *
+ * Evaluates the associated index expression to obtain an integer index for the
+ * array element. If the computed index lies outside the valid range of the
+ * symbol’s array, an error is reported and 0 is returned instead.
+ * The value 0 is always guaranteed to be within bounds.
+ *
+ * @return The evaluated array index, or 0 if the index is out of bounds.
+ *
+ * @pre This function must only be called when the variable represents an array.
+ *       (i.e., @c m_expression != nullptr)
+ */
 int Variable::eval_index_with_error_checking() const
 {
   assert(m_expression); // should only be called if this is an array

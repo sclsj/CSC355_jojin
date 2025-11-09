@@ -10,16 +10,19 @@ using namespace std;
 
 Expression::Expression(int value)
 {
-    // COMPLETE ME
+    m_constant = new Constant(value);
+    m_type = INT;
 }
 Expression::Expression(double value)
 {
-    // COMPLETE ME
+    m_constant = new Constant(value);
+    m_type = DOUBLE;
 }
 
 Expression::Expression(string *value)
 {
-    // COMPLETE ME
+    m_constant = new Constant(*value);
+    m_type = STRING;
 }
 
 Expression::Expression(Variable *variable)

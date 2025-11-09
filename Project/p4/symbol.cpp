@@ -180,3 +180,38 @@ void Symbol::print(ostream &os) const {
     }
 }
 
+// function added for p4
+
+void Symbol::set(int value, int index) {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == INT);
+        *static_cast<int*>(m_data_void_ptr) = value;
+    } else {
+        // symbol is int array
+        validate_type_and_index(INT_ARRAY, index);
+        static_cast<int *>(m_data_void_ptr)[index] = value;
+    }
+}
+
+void Symbol::set(double value, int index) {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == DOUBLE);
+        *static_cast<double*>(m_data_void_ptr) = value;
+    } else {
+        // symbol is double array
+        validate_type_and_index(DOUBLE_ARRAY, index);
+        static_cast<double *>(m_data_void_ptr)[index] = value;
+    }
+}
+
+void Symbol::set(std::string value, int index) {
+    if (index == UNDEFINED_INDEX) {
+        assert(m_type == STRING);
+        *static_cast<string*>(m_data_void_ptr) = value;
+    } else {
+        // symbol is string array
+        validate_type_and_index(STRING_ARRAY, index);
+        static_cast<string *>(m_data_void_ptr)[index] = value;
+    }
+}
+

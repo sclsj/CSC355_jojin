@@ -43,10 +43,10 @@ class Expression
 
     Gpl_type m_type = NO_TYPE;
     Operator_type m_op = NO_OP;
-    Expression *m_rhs = NULL;
-    Expression *m_lhs = NULL;
-    Constant *m_constant = NULL;
-    Variable *m_variable = NULL;
+    Expression *m_rhs = nullptr;
+    Expression *m_lhs = nullptr;
+    Constant *m_constant = nullptr;
+    Variable *m_variable = nullptr;
 
 };
 

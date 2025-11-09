@@ -57,6 +57,14 @@ class Symbol
     double get_double_value(int index = UNDEFINED_INDEX) const;
     std::string get_string_value(int index = UNDEFINED_INDEX) const;
 
+    // function added for p4
+
+    void set(int value, int index = UNDEFINED_INDEX);
+    void set(double value, int index = UNDEFINED_INDEX);
+    void set(std::string value, int index = UNDEFINED_INDEX);
+
+    // end function added for p4
+
     void print(std::ostream &os) const;
 
   private:
