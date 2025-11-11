@@ -14,6 +14,12 @@
 // symbol table
 #include "symbol_table.h"
 #include "symbol.h"
+
+// p4
+#include "expression.h"
+#include "variable.h"
+
+
 using namespace std;
 
 extern int yylex();
@@ -29,6 +35,10 @@ int undeclared = 0;
   double			union_double;
   std::string      *union_string;
   Gpl_type         union_gpl_type;
+  // p4
+  Expression*        union_expression;
+  Variable*        union_variable;
+  Operator_type    union_operator;
 }
 
 
@@ -135,9 +145,12 @@ int undeclared = 0;
 %token <union_string>  T_ID			         "identifier"
 
 
-// COMPLETE ME
-
 %type  <union_gpl_type>    simple_type
+
+//p4
+%type <union_expression> expression optional_initializer primary_expression
+%type  <union_operator>     binary_expression math_operator
+
 
 %token T_ERROR               "error"
 
@@ -187,13 +200,13 @@ variable_declaration:
         else {
             switch($1) {
                 case INT:
-                    table->insert(new Symbol(name, DEFAULT_INT_VALUE));
+                    table->insert(new Symbol(name, $3->eval_int()));
                     break;
                 case DOUBLE:
-                    table->insert(new Symbol(name, DEFAULT_DOUBLE_VALUE));
+                    table->insert(new Symbol(name, $3->eval_double()));
                     break;
                 case STRING:
-                    table->insert(new Symbol(name, DEFAULT_STRING_VALUE));
+                    table->insert(new Symbol(name, $3->eval_string()));
                     break;
             }
         }
@@ -235,6 +248,7 @@ simple_type:
 //---------------------------------------------------------------------
 optional_initializer:
     T_ASSIGN expression
+    { $$ = $2; }
     | empty
     ;
 
@@ -423,19 +437,8 @@ variable:
 //---------------------------------------------------------------------
 expression:
     primary_expression
-    | expression T_OR expression
-    | expression T_AND expression
-    | expression T_LESS_EQUAL expression
-    | expression T_GREATER_EQUAL  expression
-    | expression T_LESS expression
-    | expression T_GREATER  expression
-    | expression T_EQUAL expression
-    | expression T_NOT_EQUAL expression
-    | expression T_PLUS expression
-    | expression T_MINUS expression
-    | expression T_MULTIPLY expression
-    | expression T_DIVIDE expression
-    | expression T_MOD expression
+    | expression binary_expression expression
+    { $$ = new Expression($1, $2, $3); }
     | T_MINUS  expression %prec UNARY_OPS
     | T_NOT  expression %prec UNARY_OPS
     | math_operator T_LPAREN expression T_RPAREN
@@ -443,15 +446,33 @@ expression:
     | expression T_TOUCHES expression
     ;
 
+binary_expression:
+    T_OR               { $$ = OR; }
+    | T_AND            { $$ = AND; }
+    | T_LESS_EQUAL     { $$ = LESS_EQUAL; }
+    | T_GREATER_EQUAL  { $$ = GREATER_EQUAL; }
+    | T_LESS           { $$ = LESS_THAN; }
+    | T_GREATER        { $$ = GREATER_THAN; }
+    | T_EQUAL          { $$ = EQUAL; }
+    | T_NOT_EQUAL      { $$ = NOT_EQUAL; }
+    | T_PLUS           { $$ = PLUS; }
+    | T_MINUS          { $$ = MINUS; }
+    | T_MULTIPLY       { $$ = MULTIPLY; }
+    | T_DIVIDE         { $$ = DIVIDE; }
+    | T_MOD            { $$ = MOD; }
+    ;
+
+
+
 //---------------------------------------------------------------------
 primary_expression:
     T_LPAREN  expression T_RPAREN
     | variable
-    | T_INT_CONSTANT
+    | T_INT_CONSTANT { $$ = new Expression($1); }
     | T_TRUE
     | T_FALSE
-    | T_DOUBLE_CONSTANT
-    | T_STRING_CONSTANT
+    | T_DOUBLE_CONSTANT { $$ = new Expression($1); }
+    | T_STRING_CONSTANT { $$ = new Expression($1); }
     ;
 
 //---------------------------------------------------------------------

@@ -27,20 +27,121 @@ Expression::Expression(string *value)
 
 Expression::Expression(Variable *variable)
 {
-    // COMPLETE ME
+    m_variable = variable;
+    m_type = variable->get_type();
 }
 
-Expression::Expression(Operator_type op,
-                       Expression *lhs,
-                       Expression *rhs
-                       )
+Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
 {
-    // COMPLETE ME
+
+    m_op = op;
+    m_lhs = lhs;
+    m_rhs = rhs;
+
+    Gpl_type lt = lhs->get_type();
+    Gpl_type rt = rhs->get_type();
+
+    switch (op) {
+        case PLUS: // Plus is special due to accepting string
+            if ( (lt == STRING && rhs->is_numeric()) || (rt == STRING && lhs->is_numeric()) || (rt == STRING && lt == STRING)) m_type = STRING;
+            else if (lhs->is_numeric() && rhs->is_numeric()) {
+                if (lt == DOUBLE || rt == DOUBLE) m_type = DOUBLE;
+                else m_type = INT;
+            }
+            else {
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt)); // TODO: correct error handling
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                create_constant_expression();
+                return;
+            }
+            break;
+
+        case MINUS:
+        case MULTIPLY:
+        case DIVIDE: // TODO: divide needs special treatment
+            if (!lhs->is_numeric()) {
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
+                create_constant_expression();
+                return;
+            }
+            if (!rhs->is_numeric()) {
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                create_constant_expression();
+                return;
+            }
+            if (lt == DOUBLE || rt == DOUBLE) m_type = DOUBLE;
+            else m_type = INT;
+            break;
+
+        case MOD:
+        case AND:
+        case OR:
+            if (lt != INT) {
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
+            }
+            if (rt != INT) {
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+            }
+            if (lt != INT || rt != INT) create_constant_expression();
+            else m_type = INT;
+            break;
+
+        case EQUAL:
+        case NOT_EQUAL:
+        case LESS_THAN:
+        case LESS_EQUAL:
+        case GREATER_THAN:
+        case GREATER_EQUAL:
+            if ((lt & (INT | DOUBLE | STRING)) && (rt & (INT | DOUBLE | STRING))) {
+                m_type = INT;
+                return;
+            }
+            if (!(lt & (INT | DOUBLE | STRING))){
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
+            }
+            if (!(rt & (INT | DOUBLE | STRING))){
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+            }
+            create_constant_expression();
+            break;
+
+        default:
+            std::cerr << "Unsupported op";
+
+    }
 }
 
 Expression::Expression(Operator_type op, Expression *operand)
 {
-    // COMPLETE ME
+//    assert(operand->is_numeric()); // doesn't work for unary not, which can take in string
+    m_op = op;
+    m_rhs = operand;
+
+    switch(op) {
+        case ABS:
+        case UNARY_MINUS:
+            m_type = operand->get_type();
+            break;
+
+        case NOT:
+        case RANDOM: // to-do: validate input range
+        case FLOOR:
+            m_type = INT;
+            break;
+
+        case SIN:
+        case COS:
+        case TAN:
+        case ASIN:
+        case ACOS:
+        case ATAN:
+        case SQRT: // shouldn't sqrt(int 4) return int 2? Nevertheless pdf states sqrt always return double
+            m_type = DOUBLE;
+            break;
+
+        default:
+            std::cerr << "Unsupported op";
+    }
 }
 
 
@@ -308,4 +409,13 @@ string Expression::eval_string()
   assert(m_lhs != NULL && m_rhs != NULL);
   assert(m_op == PLUS);
   return m_lhs->eval_string() + m_rhs->eval_string();
+}
+
+void Expression::create_constant_expression() {
+    m_constant = new Constant(0);
+    m_type = INT;
+    m_lhs = nullptr;
+    m_rhs = nullptr;
+    m_op = NO_OP;
+    m_variable = nullptr;
 }

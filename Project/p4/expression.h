@@ -21,10 +21,7 @@ class Expression
     Expression(string *value);
 
     Expression(Variable *variable);
-    Expression(Operator_type op,
-               Expression *lhs,
-               Expression *rhs
-              );
+    Expression(Expression *lhs, Operator_type op, Expression *rhs);
 
     Expression(Operator_type op,
                Expression *operand
@@ -39,6 +36,9 @@ class Expression
 
     bool eval_variable() {return m_variable;}
 
+    // copied from variable
+    bool is_numeric() const {return m_type & INT || m_type & DOUBLE;}
+
   private:
 
     Gpl_type m_type = NO_TYPE;
@@ -47,6 +47,7 @@ class Expression
     Expression *m_lhs = nullptr;
     Constant *m_constant = nullptr;
     Variable *m_variable = nullptr;
+    void create_constant_expression();
 
 };
 

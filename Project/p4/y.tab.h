@@ -230,15 +230,19 @@
 
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
-#line 27 "gpl.y"
+#line 33 "gpl.y"
 {
   int              union_int;
   double			union_double;
   std::string      *union_string;
   Gpl_type         union_gpl_type;
+  // p4
+  Expression*        union_expression;
+  Variable*        union_variable;
+  Operator_type    union_operator;
 }
 /* Line 1529 of yacc.c.  */
-#line 242 "y.tab.h"
+#line 246 "y.tab.h"
 	YYSTYPE;
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
