@@ -225,18 +225,23 @@ variable_declaration:
             if ($4->get_type() != INT) {
                 Error::error(Error::ARRAY_SIZE_MUST_BE_AN_INTEGER, gpl_type_to_string($4->get_type()));
             }
-            int size = $4->eval_int();
-            if (size <= 1){
-                Error::error(Error::INVALID_ARRAY_SIZE, name, to_string(size));
-            }
             else {
-                switch($1) {
-                    case INT:
-                        table->insert(new Symbol(name, INT_ARRAY, size));
-                    case DOUBLE:
-                        table->insert(new Symbol(name, DOUBLE_ARRAY, size));
-                    case STRING:
-                        table->insert(new Symbol(name, STRING_ARRAY, size));
+                int size = $4->eval_int();
+                if (size <= 1){
+                    Error::error(Error::INVALID_ARRAY_SIZE, name, to_string(size));
+                }
+                else {
+                    switch($1) {
+                        case INT:
+                            table->insert(new Symbol(name, INT_ARRAY, size));
+                            break;
+                        case DOUBLE:
+                            table->insert(new Symbol(name, DOUBLE_ARRAY, size));
+                            break;
+                        case STRING:
+                            table->insert(new Symbol(name, STRING_ARRAY, size));
+                            break;
+                    }
                 }
             }
         }

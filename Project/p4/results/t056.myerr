@@ -1,1 +1,2 @@
-assertion "m_lhs" failed: file "expression.cpp", line 168.  Input line 4.
+Semantic error on line 4: Invalid right operand for operator '!'.
+assertion "m_lhs == NULL && m_rhs == NULL" failed: file "expression.cpp", line 158.  Input line 4.

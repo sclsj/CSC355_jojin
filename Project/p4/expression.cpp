@@ -113,9 +113,12 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
 
 Expression::Expression(Operator_type op, Expression *operand)
 {
-//    assert(operand->is_numeric()); // doesn't work for unary not, which can take in string
+    if(!operand->is_numeric()) {
+        Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
+        create_constant_expression();
+    }
     m_op = op;
-    m_rhs = operand;
+    m_lhs = operand; // TODO: change to rhs and also change eval functions
 
     switch(op) {
         case ABS:

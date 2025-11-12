@@ -3,4 +3,4 @@ Semantic error on line 2: Arithmetic divide by zero at parse time. Using zero as
 Semantic error on line 3: Arithmetic divide by zero at parse time. Using zero as the result so parse can continue.
 Semantic error on line 4: Invalid left operand for operator 'string'.
 Semantic error on line 4: Invalid right operand for operator 'double'.
-assertion "m_type == INT" failed: file "expression.cpp", line 150.  Input line 5.
+assertion "m_type == INT" failed: file "expression.cpp", line 153.  Input line 5.
