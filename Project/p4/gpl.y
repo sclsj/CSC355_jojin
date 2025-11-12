@@ -28,6 +28,8 @@ extern int line_count;  // from gpl.l, used for statement blocks
 
 int undeclared = 0;
 
+Symbol_table *table = Symbol_table::instance();
+
 %}
 
 %union {
@@ -148,7 +150,7 @@ int undeclared = 0;
 %type  <union_gpl_type>    simple_type
 
 //p4
-%type <union_expression> expression optional_initializer primary_expression
+%type <union_expression> expression optional_initializer primary_expression variable
 %type  <union_operator>     binary_expression math_operator
 
 
@@ -193,45 +195,48 @@ variable_declaration:
     simple_type  T_ID  optional_initializer
     {
         string name = *$2;
-        Symbol_table *table = Symbol_table::instance();
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
         }
         else {
             switch($1) {
                 case INT:
-                    table->insert(new Symbol(name, $3->eval_int()));
+                    if ($3) table->insert(new Symbol(name, $3->eval_int()));
+                    else table->insert(new Symbol(name, DEFAULT_INT_VALUE));
                     break;
                 case DOUBLE:
-                    table->insert(new Symbol(name, $3->eval_double()));
+                    if ($3) table->insert(new Symbol(name, $3->eval_double()));
+                    else table->insert(new Symbol(name, DEFAULT_DOUBLE_VALUE));
                     break;
                 case STRING:
-                    table->insert(new Symbol(name, $3->eval_string()));
+                    if ($3) table->insert(new Symbol(name, $3->eval_string()));
+                    else table->insert(new Symbol(name, DEFAULT_STRING_VALUE));
                     break;
             }
         }
     }
-//    | simple_type  T_ID  T_LBRACKET expression T_RBRACKET
-    | simple_type T_ID T_LBRACKET T_INT_CONSTANT T_RBRACKET
+    | simple_type  T_ID  T_LBRACKET expression T_RBRACKET
     {
         string name = *$2;
-        Symbol_table *table = Symbol_table::instance();
-        int size = $4;
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
         }
         else {
+            if ($4->get_type() != INT) {
+                Error::error(Error::ARRAY_SIZE_MUST_BE_AN_INTEGER, gpl_type_to_string($4->get_type()));
+            }
+            int size = $4->eval_int();
             if (size <= 1){
                 Error::error(Error::INVALID_ARRAY_SIZE, name, to_string(size));
             }
             else {
                 switch($1) {
                     case INT:
-                        table->insert(new Symbol(name, INT_ARRAY, $4));
+                        table->insert(new Symbol(name, INT_ARRAY, size));
                     case DOUBLE:
-                        table->insert(new Symbol(name, DOUBLE_ARRAY, $4));
+                        table->insert(new Symbol(name, DOUBLE_ARRAY, size));
                     case STRING:
-                        table->insert(new Symbol(name, STRING_ARRAY, $4));
+                        table->insert(new Symbol(name, STRING_ARRAY, size));
                 }
             }
         }
@@ -249,7 +254,7 @@ simple_type:
 optional_initializer:
     T_ASSIGN expression
     { $$ = $2; }
-    | empty
+    | empty { $$ = nullptr; }
     ;
 
 //---------------------------------------------------------------------
@@ -428,8 +433,26 @@ assign_statement:
 
 //---------------------------------------------------------------------
 variable:
-    T_ID
-    | T_ID T_LBRACKET expression T_RBRACKET
+    T_ID {
+        string name = *$1;
+        Symbol *sym = table->lookup(name);
+        if (sym == nullptr){
+            Error::error(Error::UNDECLARED_VARIABLE, name);
+        }
+        else {
+            $$ = new Expression(new Variable(sym));
+        }
+    }
+    | T_ID T_LBRACKET expression T_RBRACKET {
+        string name = *$1;
+        Symbol *sym = table->lookup(name);
+        if (sym == nullptr){
+            Error::error(Error::UNDECLARED_VARIABLE, name);
+        }
+        else {
+            $$ = new Expression(new Variable(sym, $3));
+        }
+    }
     | T_ID T_PERIOD T_ID
     | T_ID T_LBRACKET expression T_RBRACKET T_PERIOD T_ID
     ;
@@ -437,11 +460,10 @@ variable:
 //---------------------------------------------------------------------
 expression:
     primary_expression
-    | expression binary_expression expression
-    { $$ = new Expression($1, $2, $3); }
-    | T_MINUS  expression %prec UNARY_OPS
-    | T_NOT  expression %prec UNARY_OPS
-    | math_operator T_LPAREN expression T_RPAREN
+    | expression binary_expression expression { $$ = new Expression($1, $2, $3); }
+    | T_MINUS  expression %prec UNARY_OPS  { $$ = new Expression(UNARY_MINUS, $2); }
+    | T_NOT  expression %prec UNARY_OPS { $$ = new Expression(NOT, $2); }
+    | math_operator T_LPAREN expression T_RPAREN { $$ = new Expression($1, $3); }
     | expression T_NEAR expression
     | expression T_TOUCHES expression
     ;
@@ -466,28 +488,29 @@ binary_expression:
 
 //---------------------------------------------------------------------
 primary_expression:
-    T_LPAREN  expression T_RPAREN
-    | variable
+    T_LPAREN  expression T_RPAREN { $$ = $2;}
+    | variable { $$ = $1; }
     | T_INT_CONSTANT { $$ = new Expression($1); }
-    | T_TRUE
-    | T_FALSE
+    | T_TRUE { $$ = new Expression(1); }
+    | T_FALSE { $$ = new Expression(0); }
     | T_DOUBLE_CONSTANT { $$ = new Expression($1); }
     | T_STRING_CONSTANT { $$ = new Expression($1); }
     ;
 
 //---------------------------------------------------------------------
 math_operator:
-    T_SIN
-    | T_COS
-    | T_TAN
-    | T_ASIN
-    | T_ACOS
-    | T_ATAN
-    | T_SQRT
-    | T_ABS
-    | T_FLOOR
-    | T_RANDOM
+    T_SIN      { $$ = SIN; }
+    | T_COS    { $$ = COS; }
+    | T_TAN    { $$ = TAN; }
+    | T_ASIN   { $$ = ASIN; }
+    | T_ACOS   { $$ = ACOS; }
+    | T_ATAN   { $$ = ATAN; }
+    | T_SQRT   { $$ = SQRT; }
+    | T_ABS    { $$ = ABS; }
+    | T_FLOOR  { $$ = FLOOR; }
+    | T_RANDOM { $$ = RANDOM; }
     ;
+
 
 //---------------------------------------------------------------------
 empty:

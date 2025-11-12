@@ -1,0 +1,3 @@
+Semantic error on line 6: The array 'num0' was declared with illegal size '-10'. Arrays sizes must be integers of 1 or larger.
+Semantic error on line 10: The array 'num4' was declared with illegal size '-4'. Arrays sizes must be integers of 1 or larger.
+Semantic error on line 11: The array 'num5' was declared with illegal size '-288'. Arrays sizes must be integers of 1 or larger.

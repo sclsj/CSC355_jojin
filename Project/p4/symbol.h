@@ -13,9 +13,9 @@ class Animation_block;
 const int UNDEFINED_INDEX = -1;
 const int UNDEFINED_SIZE = -1;
 
-constexpr int DEFAULT_INT_VALUE = 42;
-constexpr double DEFAULT_DOUBLE_VALUE = 3.14159;
-const std::string DEFAULT_STRING_VALUE = "Hello world";
+constexpr int DEFAULT_INT_VALUE = 0;
+constexpr double DEFAULT_DOUBLE_VALUE = 0.0;
+const std::string DEFAULT_STRING_VALUE = "";
 
 class Symbol
 {
