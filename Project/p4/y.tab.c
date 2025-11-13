@@ -1803,7 +1803,7 @@ yyreduce:
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
         }
-        else if( ((yyvsp[(3) - (3)].union_expression)->get_type() != (yyvsp[(1) - (3)].union_gpl_type)) && ((yyvsp[(1) - (3)].union_gpl_type) != STRING)){
+        else if( ((yyvsp[(3) - (3)].union_expression)->get_type() != (yyvsp[(1) - (3)].union_gpl_type)) && ((yyvsp[(1) - (3)].union_gpl_type) != STRING) && !( ((yyvsp[(1) - (3)].union_gpl_type) == DOUBLE) && (yyvsp[(3) - (3)].union_expression)->get_type() == INT) ){
             Error::error(Error::INVALID_TYPE_FOR_INITIAL_VALUE, gpl_type_to_string((yyvsp[(3) - (3)].union_expression)->get_type()), *(yyvsp[(2) - (3)].union_string), gpl_type_to_string((yyvsp[(1) - (3)].union_gpl_type)));
         }
         else {

@@ -198,7 +198,7 @@ variable_declaration:
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
         }
-        else if( ($3->get_type() != $1) && ($1 != STRING)){
+        else if( ($3->get_type() != $1) && ($1 != STRING) && !( ($1 == DOUBLE) && $3->get_type() == INT) ){
             Error::error(Error::INVALID_TYPE_FOR_INITIAL_VALUE, gpl_type_to_string($3->get_type()), *$2, gpl_type_to_string($1));
         }
         else {
