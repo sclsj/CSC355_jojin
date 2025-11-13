@@ -41,6 +41,8 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
     Gpl_type lt = lhs->get_type();
     Gpl_type rt = rhs->get_type();
 
+    bool error = false;
+
     switch (op) {
         case PLUS: // Plus is special due to accepting string
             if ( (lt == STRING && rhs->is_numeric()) || (rt == STRING && lhs->is_numeric()) || (rt == STRING && lt == STRING)) m_type = STRING;
@@ -49,8 +51,8 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
                 else m_type = INT;
             }
             else {
-                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt)); // TODO: correct error handling
-                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, operator_to_string(op)); // TODO: correct error handling
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
                 create_constant_expression();
                 return;
             }
@@ -60,12 +62,14 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
         case MULTIPLY:
         case DIVIDE: // TODO: divide needs special treatment
             if (!lhs->is_numeric()) {
-                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
-                create_constant_expression();
-                return;
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, operator_to_string(op));
+                error = true;
             }
             if (!rhs->is_numeric()) {
-                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
+                error = true;
+            }
+            if (error) {
                 create_constant_expression();
                 return;
             }
@@ -74,15 +78,25 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
             break;
 
         case MOD:
-        case AND:
-        case OR:
             if (lt != INT) {
-                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, operator_to_string(op));
             }
             if (rt != INT) {
-                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
             }
             if (lt != INT || rt != INT) create_constant_expression();
+            else m_type = INT;
+            break;
+
+        case AND:
+        case OR:
+            if (!lhs->is_numeric()) {
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, operator_to_string(op));
+            }
+            if (!rhs->is_numeric()) {
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
+            }
+            if (!lhs->is_numeric() || !rhs->is_numeric()) create_constant_expression();
             else m_type = INT;
             break;
 
@@ -97,10 +111,10 @@ Expression::Expression(Expression *lhs, Operator_type op, Expression *rhs)
                 return;
             }
             if (!(lt & (INT | DOUBLE | STRING))){
-                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, gpl_type_to_string(lt));
+                Error::error(Error::INVALID_LEFT_OPERAND_TYPE, operator_to_string(op));
             }
             if (!(rt & (INT | DOUBLE | STRING))){
-                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, gpl_type_to_string(rt));
+                Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
             }
             create_constant_expression();
             break;
@@ -116,6 +130,7 @@ Expression::Expression(Operator_type op, Expression *operand)
     if(!operand->is_numeric()) {
         Error::error(Error::INVALID_RIGHT_OPERAND_TYPE, operator_to_string(op));
         create_constant_expression();
+        return;
     }
     m_op = op;
     m_lhs = operand; // TODO: change to rhs and also change eval functions

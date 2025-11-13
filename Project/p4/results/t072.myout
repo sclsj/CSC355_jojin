@@ -23,7 +23,7 @@ string s5 = "42.000000"
 string s6 = "42"
 string s7 = "42.000000"
 string s8 = "42"
-string s9 = "82"
+string s9 = "42"
 Graphics is turned off by the Makefile.  Program exiting.
 
 gpl.cpp::main() done.

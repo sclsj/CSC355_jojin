@@ -151,7 +151,7 @@ Symbol_table *table = Symbol_table::instance();
 
 //p4
 %type <union_expression> expression optional_initializer primary_expression variable
-%type  <union_operator>     binary_expression math_operator
+%type  <union_operator>      math_operator
 
 
 %token T_ERROR               "error"
@@ -198,6 +198,9 @@ variable_declaration:
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
         }
+        else if( ($3->get_type() != $1) && ($1 != STRING)){
+            Error::error(Error::INVALID_TYPE_FOR_INITIAL_VALUE, gpl_type_to_string($3->get_type()), *$2, gpl_type_to_string($1));
+        }
         else {
             switch($1) {
                 case INT:
@@ -223,11 +226,11 @@ variable_declaration:
         }
         else {
             if ($4->get_type() != INT) {
-                Error::error(Error::ARRAY_SIZE_MUST_BE_AN_INTEGER, gpl_type_to_string($4->get_type()));
+                Error::error(Error::ARRAY_SIZE_MUST_BE_AN_INTEGER, gpl_type_to_string($4->get_type()), name);
             }
             else {
                 int size = $4->eval_int();
-                if (size <= 1){
+                if (size < 1){
                     Error::error(Error::INVALID_ARRAY_SIZE, name, to_string(size));
                 }
                 else {
@@ -438,21 +441,35 @@ assign_statement:
 
 //---------------------------------------------------------------------
 variable:
-    T_ID {
+    T_ID { // TODO: handle errors (var is array)
         string name = *$1;
         Symbol *sym = table->lookup(name);
         if (sym == nullptr){
             Error::error(Error::UNDECLARED_VARIABLE, name);
+            $$ = new Expression(0);
+        }
+        else if (sym->is_array()){
+            Error::error(Error::VARIABLE_IS_AN_ARRAY, name);
+            $$ = new Expression(0);
         }
         else {
             $$ = new Expression(new Variable(sym));
         }
     }
-    | T_ID T_LBRACKET expression T_RBRACKET {
+    | T_ID T_LBRACKET expression T_RBRACKET { // TODO: handle errors (var not array, non-int/oob index)
         string name = *$1;
         Symbol *sym = table->lookup(name);
         if (sym == nullptr){
-            Error::error(Error::UNDECLARED_VARIABLE, name);
+            Error::error(Error::UNDECLARED_VARIABLE, name + "[]");
+            $$ = new Expression(0);
+        }
+        else if (!sym->is_array()){
+            Error::error(Error::VARIABLE_NOT_AN_ARRAY, name);
+            $$ = new Expression(0);
+        }
+        else if (sym->get_type() != INT){
+            Error::error(Error::ARRAY_INDEX_MUST_BE_AN_INTEGER, name, "A " + gpl_type_to_string($3->get_type()) + " expression");
+            $$ = new Expression(0);
         }
         else {
             $$ = new Expression(new Variable(sym, $3));
@@ -465,7 +482,24 @@ variable:
 //---------------------------------------------------------------------
 expression:
     primary_expression
-    | expression binary_expression expression { $$ = new Expression($1, $2, $3); }
+    | expression T_OR expression             { $$ = new Expression($1, OR, $3); }
+    | expression T_AND expression            { $$ = new Expression($1, AND, $3); }
+    | expression T_LESS_EQUAL expression     { $$ = new Expression($1, LESS_EQUAL, $3); }
+    | expression T_GREATER_EQUAL expression  { $$ = new Expression($1, GREATER_EQUAL, $3); }
+    | expression T_LESS expression           { $$ = new Expression($1, LESS_THAN, $3); }
+    | expression T_GREATER expression        { $$ = new Expression($1, GREATER_THAN, $3); }
+    | expression T_EQUAL expression          { $$ = new Expression($1, EQUAL, $3); }
+    | expression T_NOT_EQUAL expression      { $$ = new Expression($1, NOT_EQUAL, $3); }
+    | expression T_PLUS expression           { $$ = new Expression($1, PLUS, $3); }
+    | expression T_MINUS expression          { $$ = new Expression($1, MINUS, $3); }
+    | expression T_MULTIPLY expression       { $$ = new Expression($1, MULTIPLY, $3); }
+    | expression T_DIVIDE expression         { $$ = new Expression($1, DIVIDE, $3); }
+    | expression T_MOD expression            { $$ = new Expression($1, MOD, $3); }
+    | T_MINUS expression %prec UNARY_OPS     { $$ = new Expression(UNARY_MINUS, $2); }
+    | T_NOT expression %prec UNARY_OPS       { $$ = new Expression(NOT, $2); }
+    | math_operator T_LPAREN expression T_RPAREN { $$ = new Expression($1, $3); }
+    | expression T_NEAR expression           { $$ = new Expression($1, NEAR, $3); }
+    | expression T_TOUCHES expression        { $$ = new Expression($1, TOUCHES, $3); }
     | T_MINUS  expression %prec UNARY_OPS  { $$ = new Expression(UNARY_MINUS, $2); }
     | T_NOT  expression %prec UNARY_OPS { $$ = new Expression(NOT, $2); }
     | math_operator T_LPAREN expression T_RPAREN { $$ = new Expression($1, $3); }
@@ -473,21 +507,6 @@ expression:
     | expression T_TOUCHES expression
     ;
 
-binary_expression:
-    T_OR               { $$ = OR; }
-    | T_AND            { $$ = AND; }
-    | T_LESS_EQUAL     { $$ = LESS_EQUAL; }
-    | T_GREATER_EQUAL  { $$ = GREATER_EQUAL; }
-    | T_LESS           { $$ = LESS_THAN; }
-    | T_GREATER        { $$ = GREATER_THAN; }
-    | T_EQUAL          { $$ = EQUAL; }
-    | T_NOT_EQUAL      { $$ = NOT_EQUAL; }
-    | T_PLUS           { $$ = PLUS; }
-    | T_MINUS          { $$ = MINUS; }
-    | T_MULTIPLY       { $$ = MULTIPLY; }
-    | T_DIVIDE         { $$ = DIVIDE; }
-    | T_MOD            { $$ = MOD; }
-    ;
 
 
 

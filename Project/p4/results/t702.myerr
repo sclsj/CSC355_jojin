@@ -1,3 +1,0 @@
-Semantic error on line 5: Invalid left operand for operator 'double'.
-Semantic error on line 5: Invalid right operand for operator 'double'.
-Semantic error on line 5: Arithmetic divide by zero at parse time. Using zero as the result so parse can continue.

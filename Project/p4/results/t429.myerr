@@ -1,2 +1,1 @@
 Semantic error on line 6: Invalid right operand for operator 'random'.
-assertion "m_lhs == NULL && m_rhs == NULL" failed: file "expression.cpp", line 158.  Input line 6.

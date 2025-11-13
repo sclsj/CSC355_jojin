@@ -16,7 +16,7 @@ Variable::Variable(Symbol *symbol)
 
 Variable::Variable(Symbol *symbol, Expression *expression)
 {
-    m_type = symbol->get_type();
+    m_type = symbol->get_base_type();
     m_symbol = symbol;
     m_expression = expression;
 }

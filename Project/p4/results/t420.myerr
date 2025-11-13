@@ -1,2 +1,1 @@
 Semantic error on line 6: Invalid right operand for operator 'sqrt'.
-assertion "m_type == DOUBLE" failed: file "constant.cpp", line 11.  Input line 6.
