@@ -194,28 +194,32 @@ declaration:
 variable_declaration:
     simple_type  T_ID  optional_initializer
     {
+        bool valid = true;
         string name = *$2;
         if (table->lookup(name) != nullptr){
             Error::error(Error::PREVIOUSLY_DECLARED_VARIABLE, name);
+            valid = false;
+        }
+        if (!$3){
+            valid = false;
         }
         else if( ($3->get_type() != $1) && ($1 != STRING) && !( ($1 == DOUBLE) && $3->get_type() == INT) ){
             Error::error(Error::INVALID_TYPE_FOR_INITIAL_VALUE, gpl_type_to_string($3->get_type()), *$2, gpl_type_to_string($1));
+            valid = false;
         }
-        else {
-            switch($1) {
-                case INT:
-                    if ($3) table->insert(new Symbol(name, $3->eval_int()));
-                    else table->insert(new Symbol(name, DEFAULT_INT_VALUE));
-                    break;
-                case DOUBLE:
-                    if ($3) table->insert(new Symbol(name, $3->eval_double()));
-                    else table->insert(new Symbol(name, DEFAULT_DOUBLE_VALUE));
-                    break;
-                case STRING:
-                    if ($3) table->insert(new Symbol(name, $3->eval_string()));
-                    else table->insert(new Symbol(name, DEFAULT_STRING_VALUE));
-                    break;
-            }
+        switch($1) {
+            case INT:
+                if (valid) table->insert(new Symbol(name, $3->eval_int()));
+                else table->insert(new Symbol(name, DEFAULT_INT_VALUE));
+                break;
+            case DOUBLE:
+                if (valid) table->insert(new Symbol(name, $3->eval_double()));
+                else table->insert(new Symbol(name, DEFAULT_DOUBLE_VALUE));
+                break;
+            case STRING:
+                if (valid) table->insert(new Symbol(name, $3->eval_string()));
+                else table->insert(new Symbol(name, DEFAULT_STRING_VALUE));
+                break;
         }
     }
     | simple_type  T_ID  T_LBRACKET expression T_RBRACKET
@@ -467,7 +471,7 @@ variable:
             Error::error(Error::VARIABLE_NOT_AN_ARRAY, name);
             $$ = new Expression(0);
         }
-        else if (sym->get_type() != INT){
+        else if ($3->get_type() != INT){
             Error::error(Error::ARRAY_INDEX_MUST_BE_AN_INTEGER, name, "A " + gpl_type_to_string($3->get_type()) + " expression");
             $$ = new Expression(0);
         }
