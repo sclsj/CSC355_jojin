@@ -18,24 +18,10 @@ Terminals which are not used
 
 Useless rules
 
-  126 animation_parameter: object_type "identifier"
+  121 animation_parameter: object_type "identifier"
 
 
-Rules never reduced
-
-  103 expression: "-" expression
-  104           | "!" expression
-  105           | math_operator "(" expression ")"
-  106           | expression "near" expression
-  107           | expression "touches" expression
-
-
-State 102 conflicts: 19 reduce/reduce
-State 103 conflicts: 19 reduce/reduce
 State 127 conflicts: 7 shift/reduce
-State 135 conflicts: 6 reduce/reduce
-State 136 conflicts: 6 reduce/reduce
-State 168 conflicts: 19 reduce/reduce
 State 191 conflicts: 7 shift/reduce
 State 193 conflicts: 1 shift/reduce
 State 202 conflicts: 6 shift/reduce
@@ -181,32 +167,27 @@ Grammar
   100           | math_operator "(" expression ")"
   101           | expression "near" expression
   102           | expression "touches" expression
-  103           | "-" expression
-  104           | "!" expression
-  105           | math_operator "(" expression ")"
-  106           | expression "near" expression
-  107           | expression "touches" expression
 
-  108 primary_expression: "(" expression ")"
-  109                   | variable
-  110                   | "int constant"
-  111                   | "true"
-  112                   | "false"
-  113                   | "double constant"
-  114                   | "string constant"
+  103 primary_expression: "(" expression ")"
+  104                   | variable
+  105                   | "int constant"
+  106                   | "true"
+  107                   | "false"
+  108                   | "double constant"
+  109                   | "string constant"
 
-  115 math_operator: "sin"
-  116              | "cos"
-  117              | "tan"
-  118              | "asin"
-  119              | "acos"
-  120              | "atan"
-  121              | "sqrt"
-  122              | "abs"
-  123              | "floor"
-  124              | "random"
+  110 math_operator: "sin"
+  111              | "cos"
+  112              | "tan"
+  113              | "asin"
+  114              | "acos"
+  115              | "atan"
+  116              | "sqrt"
+  117              | "abs"
+  118              | "floor"
+  119              | "random"
 
-  125 empty: /* empty */
+  120 empty: /* empty */
 
 
 Terminals, with rules where they appear
@@ -231,8 +212,8 @@ error (256)
 "else" (273) 69
 "exit" (274) 72
 "print" (275) 71
-"true" (276) 111
-"false" (277) 112
+"true" (276) 106
+"false" (277) 107
 "space" (278) 42
 "leftarrow" (279) 38
 "rightarrow" (280) 39
@@ -257,8 +238,8 @@ error (256)
 "lkey" (299) 51
 "wkey" (300) 52
 "zkey" (301) 53
-"(" (302) 14 26 35 68 69 70 71 72 100 105 108
-")" (303) 14 26 35 68 69 70 71 72 100 105 108
+"(" (302) 14 26 35 68 69 70 71 72 100 103
+")" (303) 14 26 35 68 69 70 71 72 100 103
 "{" (304) 35 56
 "}" (305) 35 56
 "[" (306) 8 15 81 83
@@ -271,22 +252,22 @@ error (256)
 "-=" (313) 77
 "++" (314) 78
 "--" (315) 79
-"sin" (316) 115
-"cos" (317) 116
-"tan" (318) 117
-"asin" (319) 118
-"acos" (320) 119
-"atan" (321) 120
-"sqrt" (322) 121
-"abs" (323) 122
-"floor" (324) 123
-"random" (325) 124
-"touches" (326) 102 107
-"near" (327) 101 106
+"sin" (316) 110
+"cos" (317) 111
+"tan" (318) 112
+"asin" (319) 113
+"acos" (320) 114
+"atan" (321) 115
+"sqrt" (322) 116
+"abs" (323) 117
+"floor" (324) 118
+"random" (325) 119
+"touches" (326) 102
+"near" (327) 101
 "*" (328) 95
 "/" (329) 96
 "+" (330) 93
-"-" (331) 94 98 103
+"-" (331) 94 98
 "%" (332) 97
 "<" (333) 89
 ">" (334) 90
@@ -294,12 +275,12 @@ error (256)
 ">=" (336) 88
 "==" (337) 91
 "!=" (338) 92
-"!" (339) 99 104
+"!" (339) 99
 "&&" (340) 86
 "||" (341) 85
-"int constant" (342) 110
-"double constant" (343) 113
-"string constant" (344) 114
+"int constant" (342) 105
+"double constant" (343) 108
+"string constant" (344) 109
 "identifier" (345) 7 8 14 15 25 26 35 36 80 81 82 83
 "error" (346)
 IF_NO_ELSE (347)
@@ -376,26 +357,25 @@ assign_statement_or_empty (125)
 assign_statement (126)
     on left: 75 76 77 78 79, on right: 62 73
 variable (127)
-    on left: 80 81 82 83, on right: 75 76 77 78 79 109
+    on left: 80 81 82 83, on right: 75 76 77 78 79 104
 expression (128)
     on left: 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-    102 103 104 105 106 107, on right: 8 12 15 25 68 69 70 71 72 75
-    76 77 81 83 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101
-    102 103 104 105 106 107 108
+    102, on right: 8 12 15 25 68 69 70 71 72 75 76 77 81 83 85 86 87
+    88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103
 primary_expression (129)
-    on left: 108 109 110 111 112 113 114, on right: 84
+    on left: 103 104 105 106 107 108 109, on right: 84
 math_operator (130)
-    on left: 115 116 117 118 119 120 121 122 123 124,
-    on right: 100 105
+    on left: 110 111 112 113 114 115 116 117 118 119,
+    on right: 100
 empty (131)
-    on left: 125, on right: 3 13 22 28 60 74
+    on left: 120, on right: 3 13 22 28 60 74
 
 
 state 0
 
     0 $accept: . program $end
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     program           go to state 1
     declaration_list  go to state 2
@@ -424,7 +404,7 @@ state 2
     "textbox"    shift, and go to state 12
     "forward"    shift, and go to state 13
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     declaration           go to state 14
     variable_declaration  go to state 15
@@ -605,7 +585,7 @@ state 24
     "["  shift, and go to state 38
     "="  shift, and go to state 39
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     optional_initializer  go to state 40
     empty                 go to state 41
@@ -805,7 +785,7 @@ state 42
 
     "identifier"  shift, and go to state 90
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     parameter_list_or_empty  go to state 91
     parameter_list           go to state 92
@@ -1010,21 +990,21 @@ state 65
 
 state 66
 
-  111 primary_expression: "true" .
+  106 primary_expression: "true" .
 
-    $default  reduce using rule 111 (primary_expression)
+    $default  reduce using rule 106 (primary_expression)
 
 
 state 67
 
-  112 primary_expression: "false" .
+  107 primary_expression: "false" .
 
-    $default  reduce using rule 112 (primary_expression)
+    $default  reduce using rule 107 (primary_expression)
 
 
 state 68
 
-  108 primary_expression: "(" . expression ")"
+  103 primary_expression: "(" . expression ")"
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -1054,78 +1034,77 @@ state 68
 
 state 69
 
-  115 math_operator: "sin" .
+  110 math_operator: "sin" .
 
-    $default  reduce using rule 115 (math_operator)
+    $default  reduce using rule 110 (math_operator)
 
 
 state 70
 
-  116 math_operator: "cos" .
+  111 math_operator: "cos" .
 
-    $default  reduce using rule 116 (math_operator)
+    $default  reduce using rule 111 (math_operator)
 
 
 state 71
 
-  117 math_operator: "tan" .
+  112 math_operator: "tan" .
 
-    $default  reduce using rule 117 (math_operator)
+    $default  reduce using rule 112 (math_operator)
 
 
 state 72
 
-  118 math_operator: "asin" .
+  113 math_operator: "asin" .
 
-    $default  reduce using rule 118 (math_operator)
+    $default  reduce using rule 113 (math_operator)
 
 
 state 73
 
-  119 math_operator: "acos" .
+  114 math_operator: "acos" .
 
-    $default  reduce using rule 119 (math_operator)
+    $default  reduce using rule 114 (math_operator)
 
 
 state 74
 
-  120 math_operator: "atan" .
+  115 math_operator: "atan" .
 
-    $default  reduce using rule 120 (math_operator)
+    $default  reduce using rule 115 (math_operator)
 
 
 state 75
 
-  121 math_operator: "sqrt" .
+  116 math_operator: "sqrt" .
 
-    $default  reduce using rule 121 (math_operator)
+    $default  reduce using rule 116 (math_operator)
 
 
 state 76
 
-  122 math_operator: "abs" .
+  117 math_operator: "abs" .
 
-    $default  reduce using rule 122 (math_operator)
+    $default  reduce using rule 117 (math_operator)
 
 
 state 77
 
-  123 math_operator: "floor" .
+  118 math_operator: "floor" .
 
-    $default  reduce using rule 123 (math_operator)
+    $default  reduce using rule 118 (math_operator)
 
 
 state 78
 
-  124 math_operator: "random" .
+  119 math_operator: "random" .
 
-    $default  reduce using rule 124 (math_operator)
+    $default  reduce using rule 119 (math_operator)
 
 
 state 79
 
    98 expression: "-" . expression
-  103           | "-" . expression
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -1156,7 +1135,6 @@ state 79
 state 80
 
    99 expression: "!" . expression
-  104           | "!" . expression
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -1186,23 +1164,23 @@ state 80
 
 state 81
 
-  110 primary_expression: "int constant" .
+  105 primary_expression: "int constant" .
 
-    $default  reduce using rule 110 (primary_expression)
+    $default  reduce using rule 105 (primary_expression)
 
 
 state 82
 
-  113 primary_expression: "double constant" .
+  108 primary_expression: "double constant" .
 
-    $default  reduce using rule 113 (primary_expression)
+    $default  reduce using rule 108 (primary_expression)
 
 
 state 83
 
-  114 primary_expression: "string constant" .
+  109 primary_expression: "string constant" .
 
-    $default  reduce using rule 114 (primary_expression)
+    $default  reduce using rule 109 (primary_expression)
 
 
 state 84
@@ -1220,9 +1198,9 @@ state 84
 
 state 85
 
-  109 primary_expression: variable .
+  104 primary_expression: variable .
 
-    $default  reduce using rule 109 (primary_expression)
+    $default  reduce using rule 104 (primary_expression)
 
 
 state 86
@@ -1243,8 +1221,6 @@ state 86
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "]"        shift, and go to state 106
     "touches"  shift, and go to state 107
@@ -1274,7 +1250,6 @@ state 87
 state 88
 
   100 expression: math_operator . "(" expression ")"
-  105           | math_operator . "(" expression ")"
 
     "("  shift, and go to state 122
 
@@ -1297,8 +1272,6 @@ state 89
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "touches"  shift, and go to state 107
     "near"     shift, and go to state 108
@@ -1375,8 +1348,6 @@ state 95
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "]"        shift, and go to state 126
     "touches"  shift, and go to state 107
@@ -1400,7 +1371,7 @@ state 96
 
    56 statement_block: "{" statement_block_creator . statement_list "}" end_of_statement_block
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     statement_list  go to state 127
     empty           go to state 128
@@ -1458,9 +1429,7 @@ state 101
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
-  108 primary_expression: "(" expression . ")"
+  103 primary_expression: "(" expression . ")"
 
     ")"        shift, and go to state 132
     "touches"  shift, and go to state 107
@@ -1498,49 +1467,8 @@ state 102
    98           | "-" expression .
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  103           | "-" expression .
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
-    ")"        reduce using rule 98 (expression)
-    ")"        [reduce using rule 103 (expression)]
-    "]"        reduce using rule 98 (expression)
-    "]"        [reduce using rule 103 (expression)]
-    ";"        reduce using rule 98 (expression)
-    ";"        [reduce using rule 103 (expression)]
-    ","        reduce using rule 98 (expression)
-    ","        [reduce using rule 103 (expression)]
-    "touches"  reduce using rule 98 (expression)
-    "touches"  [reduce using rule 103 (expression)]
-    "near"     reduce using rule 98 (expression)
-    "near"     [reduce using rule 103 (expression)]
-    "*"        reduce using rule 98 (expression)
-    "*"        [reduce using rule 103 (expression)]
-    "/"        reduce using rule 98 (expression)
-    "/"        [reduce using rule 103 (expression)]
-    "+"        reduce using rule 98 (expression)
-    "+"        [reduce using rule 103 (expression)]
-    "-"        reduce using rule 98 (expression)
-    "-"        [reduce using rule 103 (expression)]
-    "%"        reduce using rule 98 (expression)
-    "%"        [reduce using rule 103 (expression)]
-    "<"        reduce using rule 98 (expression)
-    "<"        [reduce using rule 103 (expression)]
-    ">"        reduce using rule 98 (expression)
-    ">"        [reduce using rule 103 (expression)]
-    "<="       reduce using rule 98 (expression)
-    "<="       [reduce using rule 103 (expression)]
-    ">="       reduce using rule 98 (expression)
-    ">="       [reduce using rule 103 (expression)]
-    "=="       reduce using rule 98 (expression)
-    "=="       [reduce using rule 103 (expression)]
-    "!="       reduce using rule 98 (expression)
-    "!="       [reduce using rule 103 (expression)]
-    "&&"       reduce using rule 98 (expression)
-    "&&"       [reduce using rule 103 (expression)]
-    "||"       reduce using rule 98 (expression)
-    "||"       [reduce using rule 103 (expression)]
-    $default   reduce using rule 98 (expression)
+    $default  reduce using rule 98 (expression)
 
 
 state 103
@@ -1561,49 +1489,8 @@ state 103
    99           | "!" expression .
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  104           | "!" expression .
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
-    ")"        reduce using rule 99 (expression)
-    ")"        [reduce using rule 104 (expression)]
-    "]"        reduce using rule 99 (expression)
-    "]"        [reduce using rule 104 (expression)]
-    ";"        reduce using rule 99 (expression)
-    ";"        [reduce using rule 104 (expression)]
-    ","        reduce using rule 99 (expression)
-    ","        [reduce using rule 104 (expression)]
-    "touches"  reduce using rule 99 (expression)
-    "touches"  [reduce using rule 104 (expression)]
-    "near"     reduce using rule 99 (expression)
-    "near"     [reduce using rule 104 (expression)]
-    "*"        reduce using rule 99 (expression)
-    "*"        [reduce using rule 104 (expression)]
-    "/"        reduce using rule 99 (expression)
-    "/"        [reduce using rule 104 (expression)]
-    "+"        reduce using rule 99 (expression)
-    "+"        [reduce using rule 104 (expression)]
-    "-"        reduce using rule 99 (expression)
-    "-"        [reduce using rule 104 (expression)]
-    "%"        reduce using rule 99 (expression)
-    "%"        [reduce using rule 104 (expression)]
-    "<"        reduce using rule 99 (expression)
-    "<"        [reduce using rule 104 (expression)]
-    ">"        reduce using rule 99 (expression)
-    ">"        [reduce using rule 104 (expression)]
-    "<="       reduce using rule 99 (expression)
-    "<="       [reduce using rule 104 (expression)]
-    ">="       reduce using rule 99 (expression)
-    ">="       [reduce using rule 104 (expression)]
-    "=="       reduce using rule 99 (expression)
-    "=="       [reduce using rule 104 (expression)]
-    "!="       reduce using rule 99 (expression)
-    "!="       [reduce using rule 104 (expression)]
-    "&&"       reduce using rule 99 (expression)
-    "&&"       [reduce using rule 104 (expression)]
-    "||"       reduce using rule 99 (expression)
-    "||"       [reduce using rule 104 (expression)]
-    $default   reduce using rule 99 (expression)
+    $default  reduce using rule 99 (expression)
 
 
 state 104
@@ -1654,7 +1541,6 @@ state 106
 state 107
 
   102 expression: expression "touches" . expression
-  107           | expression "touches" . expression
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -1685,7 +1571,6 @@ state 107
 state 108
 
   101 expression: expression "near" . expression
-  106           | expression "near" . expression
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -2106,7 +1991,6 @@ state 121
 state 122
 
   100 expression: math_operator "(" . expression ")"
-  105           | math_operator "(" . expression ")"
 
     "true"             shift, and go to state 66
     "false"            shift, and go to state 67
@@ -2248,9 +2132,9 @@ state 131
 
 state 132
 
-  108 primary_expression: "(" expression ")" .
+  103 primary_expression: "(" expression ")" .
 
-    $default  reduce using rule 108 (primary_expression)
+    $default  reduce using rule 103 (primary_expression)
 
 
 state 133
@@ -2272,8 +2156,6 @@ state 133
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "]"        shift, and go to state 167
     "touches"  shift, and go to state 107
@@ -2318,9 +2200,6 @@ state 135
   101           | expression . "near" expression
   102           | expression . "touches" expression
   102           | expression "touches" expression .
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
-  107           | expression "touches" expression .
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2336,19 +2215,7 @@ state 135
     "&&"  shift, and go to state 120
     "||"  shift, and go to state 121
 
-    ")"        reduce using rule 102 (expression)
-    ")"        [reduce using rule 107 (expression)]
-    "]"        reduce using rule 102 (expression)
-    "]"        [reduce using rule 107 (expression)]
-    ";"        reduce using rule 102 (expression)
-    ";"        [reduce using rule 107 (expression)]
-    ","        reduce using rule 102 (expression)
-    ","        [reduce using rule 107 (expression)]
-    "touches"  reduce using rule 102 (expression)
-    "touches"  [reduce using rule 107 (expression)]
-    "near"     reduce using rule 102 (expression)
-    "near"     [reduce using rule 107 (expression)]
-    $default   reduce using rule 102 (expression)
+    $default  reduce using rule 102 (expression)
 
 
 state 136
@@ -2369,9 +2236,6 @@ state 136
   101           | expression . "near" expression
   101           | expression "near" expression .
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  106           | expression "near" expression .
-  107           | expression . "touches" expression
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2387,19 +2251,7 @@ state 136
     "&&"  shift, and go to state 120
     "||"  shift, and go to state 121
 
-    ")"        reduce using rule 101 (expression)
-    ")"        [reduce using rule 106 (expression)]
-    "]"        reduce using rule 101 (expression)
-    "]"        [reduce using rule 106 (expression)]
-    ";"        reduce using rule 101 (expression)
-    ";"        [reduce using rule 106 (expression)]
-    ","        reduce using rule 101 (expression)
-    ","        [reduce using rule 106 (expression)]
-    "touches"  reduce using rule 101 (expression)
-    "touches"  [reduce using rule 106 (expression)]
-    "near"     reduce using rule 101 (expression)
-    "near"     [reduce using rule 106 (expression)]
-    $default   reduce using rule 101 (expression)
+    $default  reduce using rule 101 (expression)
 
 
 state 137
@@ -2420,8 +2272,6 @@ state 137
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     $default  reduce using rule 95 (expression)
 
@@ -2444,8 +2294,6 @@ state 138
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     $default  reduce using rule 96 (expression)
 
@@ -2468,8 +2316,6 @@ state 139
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2496,8 +2342,6 @@ state 140
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2524,8 +2368,6 @@ state 141
    97           | expression "%" expression .
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     $default  reduce using rule 97 (expression)
 
@@ -2548,8 +2390,6 @@ state 142
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2578,8 +2418,6 @@ state 143
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2608,8 +2446,6 @@ state 144
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2638,8 +2474,6 @@ state 145
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"  shift, and go to state 109
     "/"  shift, and go to state 110
@@ -2668,8 +2502,6 @@ state 146
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2702,8 +2534,6 @@ state 147
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2736,8 +2566,6 @@ state 148
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2772,8 +2600,6 @@ state 149
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "*"   shift, and go to state 109
     "/"   shift, and go to state 110
@@ -2809,9 +2635,6 @@ state 150
   100           | math_operator "(" expression . ")"
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  105           | math_operator "(" expression . ")"
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     ")"        shift, and go to state 168
     "touches"  shift, and go to state 107
@@ -2849,8 +2672,6 @@ state 151
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "touches"  shift, and go to state 107
     "near"     shift, and go to state 108
@@ -3000,47 +2821,8 @@ state 167
 state 168
 
   100 expression: math_operator "(" expression ")" .
-  105           | math_operator "(" expression ")" .
 
-    ")"        reduce using rule 100 (expression)
-    ")"        [reduce using rule 105 (expression)]
-    "]"        reduce using rule 100 (expression)
-    "]"        [reduce using rule 105 (expression)]
-    ";"        reduce using rule 100 (expression)
-    ";"        [reduce using rule 105 (expression)]
-    ","        reduce using rule 100 (expression)
-    ","        [reduce using rule 105 (expression)]
-    "touches"  reduce using rule 100 (expression)
-    "touches"  [reduce using rule 105 (expression)]
-    "near"     reduce using rule 100 (expression)
-    "near"     [reduce using rule 105 (expression)]
-    "*"        reduce using rule 100 (expression)
-    "*"        [reduce using rule 105 (expression)]
-    "/"        reduce using rule 100 (expression)
-    "/"        [reduce using rule 105 (expression)]
-    "+"        reduce using rule 100 (expression)
-    "+"        [reduce using rule 105 (expression)]
-    "-"        reduce using rule 100 (expression)
-    "-"        [reduce using rule 105 (expression)]
-    "%"        reduce using rule 100 (expression)
-    "%"        [reduce using rule 105 (expression)]
-    "<"        reduce using rule 100 (expression)
-    "<"        [reduce using rule 105 (expression)]
-    ">"        reduce using rule 100 (expression)
-    ">"        [reduce using rule 105 (expression)]
-    "<="       reduce using rule 100 (expression)
-    "<="       [reduce using rule 105 (expression)]
-    ">="       reduce using rule 100 (expression)
-    ">="       [reduce using rule 105 (expression)]
-    "=="       reduce using rule 100 (expression)
-    "=="       [reduce using rule 105 (expression)]
-    "!="       reduce using rule 100 (expression)
-    "!="       [reduce using rule 105 (expression)]
-    "&&"       reduce using rule 100 (expression)
-    "&&"       [reduce using rule 105 (expression)]
-    "||"       reduce using rule 100 (expression)
-    "||"       [reduce using rule 105 (expression)]
-    $default   reduce using rule 100 (expression)
+    $default  reduce using rule 100 (expression)
 
 
 state 169
@@ -3279,7 +3061,7 @@ state 182
 
    35 animation_block: "animation" "identifier" "(" check_animation_parameter ")" "{" . statement_list "}" end_of_statement_block
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     statement_list  go to state 191
     empty           go to state 128
@@ -3311,8 +3093,6 @@ state 184
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     ")"        shift, and go to state 193
     "touches"  shift, and go to state 107
@@ -3338,7 +3118,7 @@ state 185
 
     "identifier"  shift, and go to state 84
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     assign_statement_or_empty  go to state 194
     assign_statement           go to state 195
@@ -3364,8 +3144,6 @@ state 186
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     ")"        shift, and go to state 197
     "touches"  shift, and go to state 107
@@ -3403,8 +3181,6 @@ state 187
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     ")"        shift, and go to state 198
     "touches"  shift, and go to state 107
@@ -3442,8 +3218,6 @@ state 188
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "touches"  shift, and go to state 107
     "near"     shift, and go to state 108
@@ -3482,8 +3256,6 @@ state 189
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "touches"  shift, and go to state 107
     "near"     shift, and go to state 108
@@ -3522,8 +3294,6 @@ state 190
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     "touches"  shift, and go to state 107
     "near"     shift, and go to state 108
@@ -3788,8 +3558,6 @@ state 210
    97           | expression . "%" expression
   101           | expression . "near" expression
   102           | expression . "touches" expression
-  106           | expression . "near" expression
-  107           | expression . "touches" expression
 
     ";"        shift, and go to state 211
     "touches"  shift, and go to state 107
@@ -3824,7 +3592,7 @@ state 212
 
     "identifier"  shift, and go to state 84
 
-    $default  reduce using rule 125 (empty)
+    $default  reduce using rule 120 (empty)
 
     assign_statement_or_empty  go to state 213
     assign_statement           go to state 195

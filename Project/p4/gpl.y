@@ -499,11 +499,6 @@ expression:
     | expression T_MULTIPLY expression       { $$ = new Expression($1, MULTIPLY, $3); }
     | expression T_DIVIDE expression         { $$ = new Expression($1, DIVIDE, $3); }
     | expression T_MOD expression            { $$ = new Expression($1, MOD, $3); }
-    | T_MINUS expression %prec UNARY_OPS     { $$ = new Expression(UNARY_MINUS, $2); }
-    | T_NOT expression %prec UNARY_OPS       { $$ = new Expression(NOT, $2); }
-    | math_operator T_LPAREN expression T_RPAREN { $$ = new Expression($1, $3); }
-    | expression T_NEAR expression           { $$ = new Expression($1, NEAR, $3); }
-    | expression T_TOUCHES expression        { $$ = new Expression($1, TOUCHES, $3); }
     | T_MINUS  expression %prec UNARY_OPS  { $$ = new Expression(UNARY_MINUS, $2); }
     | T_NOT  expression %prec UNARY_OPS { $$ = new Expression(NOT, $2); }
     | math_operator T_LPAREN expression T_RPAREN { $$ = new Expression($1, $3); }

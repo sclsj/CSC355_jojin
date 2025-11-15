@@ -558,7 +558,7 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  38
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  126
+#define YYNRULES  121
 /* YYNRULES -- Number of states.  */
 #define YYNSTATES  217
 
@@ -624,9 +624,9 @@ static const yytype_uint16 yyprhs[] =
      193,   201,   215,   220,   225,   227,   229,   233,   237,   241,
      244,   247,   249,   254,   258,   265,   267,   271,   275,   279,
      283,   287,   291,   295,   299,   303,   307,   311,   315,   319,
-     322,   325,   330,   334,   338,   341,   344,   349,   353,   357,
-     361,   363,   365,   367,   369,   371,   373,   375,   377,   379,
-     381,   383,   385,   387,   389,   391,   393
+     322,   325,   330,   334,   338,   342,   344,   346,   348,   350,
+     352,   354,   356,   358,   360,   362,   364,   366,   368,   370,
+     372,   374
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS.  */
@@ -665,13 +665,11 @@ static const yytype_int16 yyrhs[] =
       75,   128,    -1,   128,    76,   128,    -1,   128,    73,   128,
       -1,   128,    74,   128,    -1,   128,    77,   128,    -1,    76,
      128,    -1,    84,   128,    -1,   130,    47,   128,    48,    -1,
-     128,    72,   128,    -1,   128,    71,   128,    -1,    76,   128,
-      -1,    84,   128,    -1,   130,    47,   128,    48,    -1,   128,
-      72,   128,    -1,   128,    71,   128,    -1,    47,   128,    48,
-      -1,   127,    -1,    87,    -1,    21,    -1,    22,    -1,    88,
-      -1,    89,    -1,    61,    -1,    62,    -1,    63,    -1,    64,
-      -1,    65,    -1,    66,    -1,    67,    -1,    68,    -1,    69,
-      -1,    70,    -1,    -1
+     128,    72,   128,    -1,   128,    71,   128,    -1,    47,   128,
+      48,    -1,   127,    -1,    87,    -1,    21,    -1,    22,    -1,
+      88,    -1,    89,    -1,    61,    -1,    62,    -1,    63,    -1,
+      64,    -1,    65,    -1,    66,    -1,    67,    -1,    68,    -1,
+      69,    -1,    70,    -1,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
@@ -687,9 +685,9 @@ static const yytype_uint16 yyrline[] =
      413,   418,   423,   428,   433,   434,   439,   440,   441,   442,
      443,   448,   463,   482,   483,   488,   489,   490,   491,   492,
      493,   494,   495,   496,   497,   498,   499,   500,   501,   502,
-     503,   504,   505,   506,   507,   508,   509,   510,   511,   519,
-     520,   521,   522,   523,   524,   525,   530,   531,   532,   533,
-     534,   535,   536,   537,   538,   539,   544
+     503,   504,   505,   506,   514,   515,   516,   517,   518,   519,
+     520,   525,   526,   527,   528,   529,   530,   531,   532,   533,
+     534,   539
 };
 #endif
 
@@ -761,9 +759,9 @@ static const yytype_uint8 yyr1[] =
      121,   122,   123,   124,   125,   125,   126,   126,   126,   126,
      126,   127,   127,   127,   127,   128,   128,   128,   128,   128,
      128,   128,   128,   128,   128,   128,   128,   128,   128,   128,
-     128,   128,   128,   128,   128,   128,   128,   128,   128,   129,
-     129,   129,   129,   129,   129,   129,   130,   130,   130,   130,
-     130,   130,   130,   130,   130,   130,   131
+     128,   128,   128,   128,   129,   129,   129,   129,   129,   129,
+     129,   130,   130,   130,   130,   130,   130,   130,   130,   130,
+     130,   131
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -779,9 +777,9 @@ static const yytype_uint8 yyr2[] =
        7,    13,     4,     4,     1,     1,     3,     3,     3,     2,
        2,     1,     4,     3,     6,     1,     3,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     2,
-       2,     4,     3,     3,     2,     2,     4,     3,     3,     3,
+       2,     4,     3,     3,     3,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     0
+       1,     0
 };
 
 /* YYDEFACT[STATE-NAME] -- Default rule to reduce with in state
@@ -789,28 +787,28 @@ static const yytype_uint8 yyr2[] =
    means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-     126,     0,   126,     4,     1,    10,    11,    12,    17,    18,
+     121,     0,   121,     4,     1,    10,    11,    12,    17,    18,
       19,    20,    21,     0,     3,     0,     0,     0,     0,     0,
-       2,    29,     0,     5,   126,     6,     0,     7,     0,     0,
+       2,    29,     0,     5,   121,     6,     0,     7,     0,     0,
        0,     0,    28,    30,    31,    32,    33,     0,     0,     0,
-       8,    14,   126,     0,    58,    34,    35,    43,    39,    40,
+       8,    14,   121,     0,    58,    34,    35,    43,    39,    40,
       41,    42,    44,    45,    46,    47,    48,    49,    50,    51,
-      52,    53,    54,     0,     0,     0,   112,   113,     0,   116,
-     117,   118,   119,   120,   121,   122,   123,   124,   125,     0,
-       0,   111,   114,   115,    81,   110,     0,    85,     0,    13,
-       0,     0,    22,    25,    23,     0,   126,    38,     0,     0,
+      52,    53,    54,     0,     0,     0,   107,   108,     0,   111,
+     112,   113,   114,   115,   116,   117,   118,   119,   120,     0,
+       0,   106,   109,   110,    81,   105,     0,    85,     0,    13,
+       0,     0,    22,    25,    23,     0,   121,    38,     0,     0,
        0,     0,    99,   100,     0,     0,     9,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,    15,     0,    16,     0,    61,     0,
-      37,    27,   109,     0,    83,   103,   102,    96,    97,    94,
+      37,    27,   104,     0,    83,   103,   102,    96,    97,    94,
       95,    98,    90,    91,    88,    89,    92,    93,    87,    86,
        0,    26,    24,     0,     0,     0,     0,    59,    68,    60,
       64,    65,     0,     0,     0,     0,     0,    82,   101,     0,
       58,     0,     0,    57,    66,    67,    63,     0,     0,     0,
-      79,    80,   126,     0,     0,   126,     0,     0,    76,    77,
+      79,    80,   121,     0,     0,   121,     0,     0,    76,    77,
       78,     0,    84,    58,    59,    74,    75,    73,    72,    59,
       69,    56,    62,     0,    36,    58,    59,     0,    70,    55,
-       0,    58,   126,    59,     0,     0,    71
+       0,    58,   121,    59,     0,     0,    71
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -2010,119 +2008,94 @@ yyreduce:
     { (yyval.union_expression) = new Expression((yyvsp[(1) - (4)].union_operator), (yyvsp[(3) - (4)].union_expression)); }
     break;
 
-  case 102:
-#line 505 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (3)].union_expression), NEAR, (yyvsp[(3) - (3)].union_expression)); }
-    break;
-
-  case 103:
-#line 506 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (3)].union_expression), TOUCHES, (yyvsp[(3) - (3)].union_expression)); }
-    break;
-
   case 104:
-#line 507 "gpl.y"
-    { (yyval.union_expression) = new Expression(UNARY_MINUS, (yyvsp[(2) - (2)].union_expression)); }
+#line 514 "gpl.y"
+    { (yyval.union_expression) = (yyvsp[(2) - (3)].union_expression);}
     break;
 
   case 105:
-#line 508 "gpl.y"
-    { (yyval.union_expression) = new Expression(NOT, (yyvsp[(2) - (2)].union_expression)); }
+#line 515 "gpl.y"
+    { (yyval.union_expression) = (yyvsp[(1) - (1)].union_expression); }
     break;
 
   case 106:
-#line 509 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (4)].union_operator), (yyvsp[(3) - (4)].union_expression)); }
+#line 516 "gpl.y"
+    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_int)); }
+    break;
+
+  case 107:
+#line 517 "gpl.y"
+    { (yyval.union_expression) = new Expression(1); }
+    break;
+
+  case 108:
+#line 518 "gpl.y"
+    { (yyval.union_expression) = new Expression(0); }
     break;
 
   case 109:
 #line 519 "gpl.y"
-    { (yyval.union_expression) = (yyvsp[(2) - (3)].union_expression);}
+    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_double)); }
     break;
 
   case 110:
 #line 520 "gpl.y"
-    { (yyval.union_expression) = (yyvsp[(1) - (1)].union_expression); }
+    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_string)); }
     break;
 
   case 111:
-#line 521 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_int)); }
+#line 525 "gpl.y"
+    { (yyval.union_operator) = SIN; }
     break;
 
   case 112:
-#line 522 "gpl.y"
-    { (yyval.union_expression) = new Expression(1); }
+#line 526 "gpl.y"
+    { (yyval.union_operator) = COS; }
     break;
 
   case 113:
-#line 523 "gpl.y"
-    { (yyval.union_expression) = new Expression(0); }
+#line 527 "gpl.y"
+    { (yyval.union_operator) = TAN; }
     break;
 
   case 114:
-#line 524 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_double)); }
+#line 528 "gpl.y"
+    { (yyval.union_operator) = ASIN; }
     break;
 
   case 115:
-#line 525 "gpl.y"
-    { (yyval.union_expression) = new Expression((yyvsp[(1) - (1)].union_string)); }
+#line 529 "gpl.y"
+    { (yyval.union_operator) = ACOS; }
     break;
 
   case 116:
 #line 530 "gpl.y"
-    { (yyval.union_operator) = SIN; }
+    { (yyval.union_operator) = ATAN; }
     break;
 
   case 117:
 #line 531 "gpl.y"
-    { (yyval.union_operator) = COS; }
+    { (yyval.union_operator) = SQRT; }
     break;
 
   case 118:
 #line 532 "gpl.y"
-    { (yyval.union_operator) = TAN; }
+    { (yyval.union_operator) = ABS; }
     break;
 
   case 119:
 #line 533 "gpl.y"
-    { (yyval.union_operator) = ASIN; }
+    { (yyval.union_operator) = FLOOR; }
     break;
 
   case 120:
 #line 534 "gpl.y"
-    { (yyval.union_operator) = ACOS; }
-    break;
-
-  case 121:
-#line 535 "gpl.y"
-    { (yyval.union_operator) = ATAN; }
-    break;
-
-  case 122:
-#line 536 "gpl.y"
-    { (yyval.union_operator) = SQRT; }
-    break;
-
-  case 123:
-#line 537 "gpl.y"
-    { (yyval.union_operator) = ABS; }
-    break;
-
-  case 124:
-#line 538 "gpl.y"
-    { (yyval.union_operator) = FLOOR; }
-    break;
-
-  case 125:
-#line 539 "gpl.y"
     { (yyval.union_operator) = RANDOM; }
     break;
 
 
 /* Line 1267 of yacc.c.  */
-#line 2126 "y.tab.c"
+#line 2099 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
